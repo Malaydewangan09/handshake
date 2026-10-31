@@ -1,6 +1,7 @@
 // Post into the Handshake channel in Mattermost as one of the demo people, or read it.
 //   node switch/say.ts maria "@seaside-inn-agent start the handshake"
 //   node switch/say.ts read [limit]
+//   node switch/say.ts press maria Sign      (presses the newest button with that label, as that person)
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOM_NAME, ROOT } from "./companies.ts";
@@ -50,12 +51,34 @@ if (who === "read") {
     if (p.type) continue; // system posts: joins, header changes
     console.log(`\n[${p.props?.override_username ?? name.get(p.user_id)}] ${p.message}`);
   }
+} else if (who === "press" && rest[0] in PEOPLE && rest[1]) {
+  const [person, label] = rest;
+  const token = await login(person);
+  const ch = await channel(token);
+  const { order, posts } = await api(token, `/channels/${ch.id}/posts?per_page=60`);
+  // Newest first: the latest card that still offers this button.
+  for (const id of order) {
+    for (const att of posts[id].props?.attachments ?? []) {
+      const action = (att.actions ?? []).find((a: { name: string }) => a.name === label);
+      if (!action) continue;
+      const res = await fetch(`${MM}/posts/${id}/actions/${action.id}`, {
+        method: "POST",
+        headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+        body: "{}",
+      });
+      const text = await res.text();
+      console.log(`pressed "${label}" on "${att.title ?? att.text ?? id}" as ${person}: ${res.status} ${text.slice(0, 200)}`);
+      process.exit(res.ok ? 0 : 1);
+    }
+  }
+  console.error(`no "${label}" button in ~${ch.display_name}`);
+  process.exit(1);
 } else if (who in PEOPLE) {
   const token = await login(who);
   const ch = await channel(token);
   await api(token, "/posts", { method: "POST", body: JSON.stringify({ channel_id: ch.id, message: rest.join(" ") }) });
   console.log(`posted to ~${ch.display_name} as ${who}`);
 } else {
-  console.error("usage: say.ts maria|arjun <message> | say.ts read [limit]");
+  console.error("usage: say.ts maria|arjun <message> | say.ts read [limit] | say.ts press maria|arjun <button>");
   process.exit(2);
 }
