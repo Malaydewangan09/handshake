@@ -14,7 +14,8 @@ const SEEN_FILE = join(HERE, ".state/github-sync.json");
 const CHECK_NAME = "Agreement with RoomFinder";
 const POLL_MS = 10_000;
 
-const state = JSON.parse(readFileSync(join(HERE, ".state/state.json"), "utf8"));
+// Re-read on every use: a reset opens a new room while this keeps running.
+const currentState = () => JSON.parse(readFileSync(join(HERE, ".state/state.json"), "utf8"));
 const port = /^API_HOST_PORT=(\d+)/m.exec(readFileSync(join(HERE, ".env"), "utf8"))?.[1] ?? "8000";
 const { values } = parseArgs({ options: { once: { type: "boolean" } } });
 
@@ -27,6 +28,7 @@ const sh = (cmd: string, args: string[]) => execFileSync(cmd, args, { cwd: ROOT,
 const log = (msg: string) => console.log(`${new Date().toISOString().slice(11, 19)} ${msg}`);
 
 async function post(agent: { id: string; apiKey: string }, content: string) {
+  const state = currentState();
   const res = await fetch(`http://localhost:${port}/agents/${agent.id}/message`, {
     method: "POST",
     headers: { authorization: `Bearer ${agent.apiKey}`, "content-type": "application/json" },
@@ -39,7 +41,7 @@ async function post(agent: { id: string; apiKey: string }, content: string) {
 const owner = (pr: Pr): Company | undefined => [HOTEL, SITE].find((c) => pr.headRefName.startsWith(`handshake/${c.slug}/`));
 
 async function onStateChange(pr: Pr, c: Company) {
-  const agent = state.github?.[c.slug];
+  const agent = currentState().github?.[c.slug];
   if (!agent) throw new Error(`no GitHub agent for ${c.name}, run provision.ts`);
   if (pr.state === "MERGED") await post(agent, `Pull request #${pr.number} is merged and live: ${pr.title}\n\n@${c.agent} run the bookings again.`);
   if (pr.state === "CLOSED") await post(agent, `Pull request #${pr.number} was closed without merging: ${pr.title}\n\n@${c.agent}`);
