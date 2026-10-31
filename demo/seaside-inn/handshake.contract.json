@@ -1,0 +1,266 @@
+{
+  "version": 1,
+  "bundles": [
+    {
+      "version": 1,
+      "company": "RoomFinder",
+      "cases": [
+        {
+          "id": "book-1-night",
+          "title": "Guest books 1 night, April 3 to 4",
+          "kind": "booking",
+          "input": {
+            "requests": [
+              {
+                "method": "POST",
+                "path": "/reservations",
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": "[redacted]",
+                  "Request-Id": "uuid-1"
+                },
+                "body": {
+                  "guest": "Ana Silva",
+                  "check_in": "04/03/2026",
+                  "check_out": "04/04/2026",
+                  "partner_ref": "RF-1001"
+                }
+              }
+            ]
+          },
+          "intent": {
+            "stays": [
+              {
+                "nights": 1,
+                "charge": 120
+              }
+            ]
+          }
+        },
+        {
+          "id": "book-slow-network",
+          "title": "Guest books 1 night, the app is slow and tries again",
+          "kind": "booking-retry",
+          "input": {
+            "requests": [
+              {
+                "method": "POST",
+                "path": "/reservations",
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": "[redacted]",
+                  "Request-Id": "uuid-1"
+                },
+                "body": {
+                  "guest": "Ana Silva",
+                  "check_in": "05/10/2026",
+                  "check_out": "05/11/2026",
+                  "partner_ref": "RF-1002"
+                }
+              },
+              {
+                "method": "POST",
+                "path": "/reservations",
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": "[redacted]",
+                  "Request-Id": "uuid-1"
+                },
+                "body": {
+                  "guest": "Ana Silva",
+                  "check_in": "05/10/2026",
+                  "check_out": "05/11/2026",
+                  "partner_ref": "RF-1002"
+                }
+              }
+            ]
+          },
+          "intent": {
+            "roomsBooked": 1
+          }
+        },
+        {
+          "id": "book-then-cancel",
+          "title": "Guest books 1 night, then cancels",
+          "kind": "booking-then-cancel",
+          "input": {
+            "requests": [
+              {
+                "method": "POST",
+                "path": "/reservations",
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": "[redacted]",
+                  "Request-Id": "uuid-1"
+                },
+                "body": {
+                  "guest": "Ana Silva",
+                  "check_in": "06/01/2026",
+                  "check_out": "06/02/2026",
+                  "partner_ref": "RF-1003"
+                }
+              },
+              {
+                "method": "POST",
+                "path": "/reservations/cancel",
+                "headers": {
+                  "Content-Type": "application/json",
+                  "Authorization": "[redacted]",
+                  "Request-Id": "uuid-2"
+                },
+                "body": {
+                  "partner_ref": "RF-1003"
+                }
+              }
+            ]
+          },
+          "intent": {
+            "guestCharged": 0
+          }
+        }
+      ]
+    },
+    {
+      "version": 1,
+      "company": "Seaside Inn",
+      "cases": [
+        {
+          "id": "confirmation",
+          "title": "Seaside Inn confirms a 1-night booking",
+          "kind": "booking-reply",
+          "input": {
+            "status": 201,
+            "body": {
+              "reservation_id": "r_0001",
+              "nights": 1,
+              "total": 120,
+              "currency": "USD"
+            }
+          },
+          "intent": {
+            "kind": "confirmed",
+            "nights": 1,
+            "total": 120
+          }
+        },
+        {
+          "id": "sold-out",
+          "title": "Seaside Inn has no rooms left",
+          "kind": "booking-reply",
+          "input": {
+            "status": 409,
+            "body": {
+              "error": "sold_out"
+            }
+          },
+          "intent": {
+            "kind": "sold_out"
+          }
+        }
+      ]
+    }
+  ],
+  "verdicts": [
+    {
+      "version": 1,
+      "checkedBy": "RoomFinder",
+      "casesFrom": "Seaside Inn",
+      "bundleHash": "d14dec41eda6",
+      "verdicts": [
+        {
+          "id": "confirmation",
+          "title": "Seaside Inn confirms a 1-night booking",
+          "kind": "booking-reply",
+          "intent": {
+            "kind": "confirmed",
+            "nights": 1,
+            "total": 120
+          },
+          "pass": true,
+          "actual": {
+            "kind": "confirmed",
+            "nights": 1,
+            "total": 120
+          },
+          "expectedText": "tell the guest \"Booked: 1 night, $120 total\"",
+          "gotText": "tell the guest \"Booked: 1 night, $120 total\""
+        },
+        {
+          "id": "sold-out",
+          "title": "Seaside Inn has no rooms left",
+          "kind": "booking-reply",
+          "intent": {
+            "kind": "sold_out"
+          },
+          "pass": true,
+          "actual": {
+            "kind": "sold_out"
+          },
+          "expectedText": "tell the guest \"Sorry, no rooms left\"",
+          "gotText": "tell the guest \"Sorry, no rooms left\""
+        }
+      ]
+    },
+    {
+      "version": 1,
+      "checkedBy": "Seaside Inn",
+      "casesFrom": "RoomFinder",
+      "bundleHash": "d38abd1b8dd7",
+      "verdicts": [
+        {
+          "id": "book-1-night",
+          "title": "Guest books 1 night, April 3 to 4",
+          "kind": "booking",
+          "intent": {
+            "stays": [
+              {
+                "nights": 1,
+                "charge": 120
+              }
+            ]
+          },
+          "pass": true,
+          "actual": {
+            "stays": [
+              {
+                "nights": 1,
+                "charge": 120
+              }
+            ]
+          },
+          "expectedText": "book 1 night for $120",
+          "gotText": "book 1 night for $120"
+        },
+        {
+          "id": "book-slow-network",
+          "title": "Guest books 1 night, the app is slow and tries again",
+          "kind": "booking-retry",
+          "intent": {
+            "roomsBooked": 1
+          },
+          "pass": true,
+          "actual": {
+            "roomsBooked": 1
+          },
+          "expectedText": "book 1 room",
+          "gotText": "book 1 room"
+        },
+        {
+          "id": "book-then-cancel",
+          "title": "Guest books 1 night, then cancels",
+          "kind": "booking-then-cancel",
+          "intent": {
+            "guestCharged": 0
+          },
+          "pass": true,
+          "actual": {
+            "guestCharged": 0
+          },
+          "expectedText": "charge the guest nothing",
+          "gotText": "charge the guest nothing"
+        }
+      ]
+    }
+  ],
+  "id": "4289c952258d"
+}
