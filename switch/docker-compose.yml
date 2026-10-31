@@ -1,0 +1,120 @@
+# A local Switch server for Handshake: Postgres, switch-core and the web gateway.
+# Generate secrets first: ./init-env.sh
+name: handshake-switch
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_OWNER_USER}
+      POSTGRES_PASSWORD: ${DB_OWNER_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_OWNER_USER}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  # switch-core serves requests as an unprivileged role so row-level security applies. This creates it.
+  init-db:
+    image: postgres:16-alpine
+    environment:
+      PGPASSWORD: ${DB_OWNER_PASSWORD}
+    entrypoint: >
+      sh -c "
+        psql -h postgres -U ${DB_OWNER_USER} -d postgres -tc \"SELECT 1 FROM pg_database WHERE datname='mattermost'\" | grep -q 1 ||
+          psql -h postgres -U ${DB_OWNER_USER} -d postgres -c 'CREATE DATABASE mattermost;'
+        psql -h postgres -U ${DB_OWNER_USER} -d postgres -tc \"SELECT 1 FROM pg_roles WHERE rolname='${DB_USER}'\" | grep -q 1 ||
+          psql -h postgres -U ${DB_OWNER_USER} -d postgres -c 'CREATE ROLE \"${DB_USER}\" LOGIN PASSWORD '\\''${DB_PASSWORD}'\\'' NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS;'
+      "
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  switch:
+    image: ghcr.io/sandbox-quantum/switch-core:${SWITCH_VERSION}
+    ports:
+      - "127.0.0.1:${API_HOST_PORT:-8000}:8000"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_OWNER_USER: ${DB_OWNER_USER}
+      DB_OWNER_PASSWORD: ${DB_OWNER_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      ID_SERVER_NAME: localhost
+      AGENT_REGISTRATION_TOKEN: ${AGENT_REGISTRATION_TOKEN}
+      SECRET_KEYS: ${SECRET_KEYS}
+      GATEWAY_COOKIE_SECURE: "false"
+      GATEWAY_ADMIN_EMAIL: ${GATEWAY_ADMIN_EMAIL}
+      GATEWAY_ADMIN_PASSWORD: ${GATEWAY_ADMIN_PASSWORD}
+      FRONTEND_BASE_URL: http://localhost:${GATEWAY_HOST_PORT:-3300}
+      FEATURE_FLAGS_ENABLED: agent_management
+      # Mattermost is on the compose network, a private address switch-core refuses by default.
+      OUTBOUND_ALLOWED_PRIVATE_HOSTS: mattermost
+      CONTROLLER_TOKEN_SECRET: ${CONTROLLER_TOKEN_SECRET}
+      TELEGRAM_APP_BOT_TOKEN: ${TELEGRAM_APP_BOT_TOKEN:-}
+    depends_on:
+      init-db:
+        condition: service_completed_successfully
+
+  # The chat app people and agents use. Each agent gets its own bot account here.
+  mattermost:
+    image: mattermost/mattermost-team-edition:11.9.0
+    platform: linux/amd64 # no arm64 image is published; runs under emulation on Apple silicon
+    ports:
+      - "127.0.0.1:${MATTERMOST_HOST_PORT:-8065}:8065"
+    environment:
+      MM_SQLSETTINGS_DRIVERNAME: postgres
+      MM_SQLSETTINGS_DATASOURCE: postgres://${DB_OWNER_USER}:${DB_OWNER_PASSWORD}@postgres:5432/mattermost?sslmode=disable
+      MM_SERVICESETTINGS_SITEURL: http://localhost:${MATTERMOST_HOST_PORT:-8065}
+      MM_SERVICESETTINGS_ENABLELOCALMODE: "true"
+      MM_SERVICESETTINGS_ENABLEONBOARDINGFLOW: "false"
+      MM_SERVICESETTINGS_ENABLEBOTACCOUNTCREATION: "true"
+      MM_SERVICESETTINGS_ENABLEUSERACCESSTOKENS: "true"
+      # Lets a button on a Switch card call back into switch-core on the compose network.
+      MM_SERVICESETTINGS_ALLOWEDUNTRUSTEDINTERNALCONNECTIONS: switch
+      MM_TEAMSETTINGS_ENABLEOPENSERVER: "true"
+      MM_TEAMSETTINGS_TEAMMATENAMEDISPLAY: "full_name"
+      MM_LOGSETTINGS_ENABLEDIAGNOSTICS: "false"
+      MM_SERVICESETTINGS_ENABLESECURITYFIXALERT: "false"
+      MM_ANNOUNCEMENTSETTINGS_ADMINNOTICESENABLED: "false"
+      MM_ANNOUNCEMENTSETTINGS_USERNOTICESENABLED: "false"
+      MM_PLUGINSETTINGS_ENABLEREMOTEMARKETPLACE: "false"
+      MM_PLUGINSETTINGS_PLUGINSTATES: '{"mattermost-ai":{"Enable":false},"com.mattermost.calls":{"Enable":false}}'
+    depends_on:
+      init-db:
+        condition: service_completed_successfully
+
+  # Switch's own seeder: Mattermost admin, team and the Switch-to-Mattermost connection.
+  setup:
+    image: ghcr.io/sandbox-quantum/setup:${SWITCH_VERSION}
+    restart: on-failure
+    environment:
+      SWITCH_URL: http://switch:8000
+      MATTERMOST_URL: http://mattermost:8065
+      MATTERMOST_URL_FOR_SWITCH: http://mattermost:8065
+      MATTERMOST_CALLBACK_BASE_URL: http://switch:8081
+      MATTERMOST_ADMIN_USER: ${MATTERMOST_ADMIN_USER}
+      MATTERMOST_ADMIN_PASSWORD: ${MATTERMOST_ADMIN_PASSWORD}
+      MATTERMOST_TEAM_NAME: ${MATTERMOST_TEAM_NAME}
+      MATTERMOST_USER: ${MATTERMOST_USER}
+      MATTERMOST_USER_PASSWORD: ${MATTERMOST_USER_PASSWORD}
+      GATEWAY_ADMIN_EMAIL: ${GATEWAY_ADMIN_EMAIL}
+      GATEWAY_ADMIN_PASSWORD: ${GATEWAY_ADMIN_PASSWORD}
+    depends_on:
+      - mattermost
+      - switch
+
+  gateway:
+    image: ghcr.io/sandbox-quantum/gateway:${SWITCH_VERSION}
+    ports:
+      - "127.0.0.1:${GATEWAY_HOST_PORT:-3300}:3000"
+    depends_on:
+      - switch
+
+volumes:
+  pgdata:

@@ -1,0 +1,10 @@
+node_modules/
+.handshake/
+web/.next/
+switch/.env
+switch/.tools/
+switch/.state*/
+.worktrees/
+brag-output/
+web/node_modules/
+web/tsconfig.tsbuildinfo

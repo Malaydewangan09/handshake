@@ -1,0 +1,29 @@
+# Seaside Inn's release check: every change to its booking system must keep the signed agreement with RoomFinder.
+name: Handshake
+
+on:
+  pull_request:
+    branches: [demo]
+    paths: ["demo/seaside-inn/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: Agreement with RoomFinder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check the signed agreement
+        working-directory: demo/seaside-inn
+        run: |
+          if [ ! -f handshake.contract.json ]; then
+            echo "No signed agreement yet, nothing to check." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node ../../src/cli.ts gate handshake.config.ts handshake.contract.json --md | tee -a "$GITHUB_STEP_SUMMARY"
+          exit "${PIPESTATUS[0]}"

@@ -1,0 +1,23 @@
+{
+  "name": "handshake",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Two companies' agents verify an API integration against each other's real code without sharing source.",
+  "bin": {
+    "handshake": "src/cli.ts"
+  },
+  "engines": {
+    "node": ">=23.6"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.ts\" \"demo/*/test/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "handshake": "node src/cli.ts",
+    "demo": "bash scripts/demo.sh"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.30",
+    "typescript": "5.8.3"
+  }
+}
