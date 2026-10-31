@@ -1,5 +1,5 @@
-// Dates as our site shows them to guests: 03/04/2026 is 3 April.
+// Seaside Inn's partner guide asks for MM/DD/YYYY: 04/03/2026 is 3 April.
 export function toHotelDate(iso: string): string {
   const [year, month, day] = iso.split("-");
-  return `${day}/${month}/${year}`;
+  return `${month}/${day}/${year}`;
 }
