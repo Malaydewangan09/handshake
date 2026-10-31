@@ -41,6 +41,9 @@ export class Ledger {
   byId(id: string): Reservation | undefined {
     return this.#reservations.find((r) => r.id === id);
   }
+  byPartnerRef(partnerRef: string): Reservation | undefined {
+    return this.#reservations.find((r) => r.partnerRef === partnerRef && r.status === "booked");
+  }
 }
 
 const error = (status: number, code: string): Response => ({ status, body: { error: code } });
@@ -86,8 +89,13 @@ export function book(req: Request, ledger: Ledger): Response {
 
 /** POST /reservations/cancel */
 export function cancel(req: Request, ledger: Ledger): Response {
-  const { reservation_id } = (req.body ?? {}) as Record<string, unknown>;
-  const r = typeof reservation_id === "string" ? ledger.byId(reservation_id) : undefined;
+  const { reservation_id, partner_ref } = (req.body ?? {}) as Record<string, unknown>;
+  const r =
+    typeof reservation_id === "string"
+      ? ledger.byId(reservation_id)
+      : typeof partner_ref === "string"
+        ? ledger.byPartnerRef(partner_ref)
+        : undefined;
   if (!r) return error(404, "reservation_not_found");
   r.status = "cancelled";
   return { status: 200, body: { reservation_id: r.id, status: "cancelled" } };
