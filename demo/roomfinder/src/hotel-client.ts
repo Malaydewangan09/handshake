@@ -35,7 +35,7 @@ export async function bookRoom(send: Transport, b: Booking, apiKey = process.env
         method: "POST",
         path: "/reservations",
         headers: headers(apiKey, requestId),
-        body: { guest: b.guest, check_in: toHotelDate(b.checkIn, b.site), check_out: toHotelDate(b.checkOut, b.site), partner_ref: b.ref },
+        body: { guest: b.guest, check_in: toHotelDate(b.checkIn), check_out: toHotelDate(b.checkOut), partner_ref: b.ref },
       });
       return toResult(res);
     } catch (err) {
