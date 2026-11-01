@@ -27,6 +27,7 @@ const FAQ = [
   ["What happens after the first check?", "The watcher keeps going. Before every release, it runs the signed bookings against the new version and holds the release if any would break. The first check happens once per partner. The watcher runs on every release after that."],
   ["Does it only work for hotels?", "No. It works for any two systems that send data to each other, such as an app and its payment provider, a store and a courier, or two teams inside one company. Both sides can be engineering teams. The hotel just makes the easiest story to follow."],
   ["Does either company see the other's code?", "No. Each agent reads only its own company's code, on its own machine. Only test bookings, results and short notes are shared."],
+  ["How does it find the other guests without sharing customer data?", "Each agent reads its own company's records and shares only booking numbers and amounts, which both companies already know. Names, emails and cards stay where they are. Both sides run the comparison and must get the same list."],
   ["Does the agent change our code by itself?", "No. It opens a pull request in your own repo with the fix and a test. Your engineers review it, then merge it or close it."],
   ["When is a bug marked fixed?", "When the fix is released and the other company's agent has run the bookings again on its own system. A merged pull request is not enough."],
   ["Who can press the buttons in the chat?", "Only that company's own people. Switch refuses a button press from anyone else."],
@@ -88,8 +89,8 @@ export default function Page() {
             Catch the bugs that live between two companies
           </h1>
           <p className="mx-auto mt-6 max-w-[41rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
-            Each company&apos;s AI agent checks its own side in one shared chat. In minutes both know whose bug it is, the owner fixes it in a pull
-            request, and a signed agreement stops it coming back. No code changes hands.
+            Each company&apos;s AI agent checks its own side in one shared chat. In minutes both know whose bug it is and every customer it
+            already hit. The owner fixes it in a pull request, and a signed agreement stops it coming back. No code changes hands.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a href="#demo" className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-5 py-3 text-[15px] font-medium text-white transition hover:bg-ink/85 active:scale-[0.98]">
@@ -134,13 +135,16 @@ export default function Page() {
               <p>
                 Then RoomFinder blamed the hotel, and the hotel blamed RoomFinder. Working out whose bug it was took a week of emails and log files.
               </p>
+              <p>
+                And Ana was only the guest who wrote in. Twenty-five others had been billed wrong since March, and neither company knew.
+              </p>
             </div>
           </div>
           <div className="mt-16 grid grid-cols-1 divide-y divide-white/10 border-y border-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {[
               ["31", "nights booked, for a 1-night stay"],
-              ["2", "rooms, when the app tried again"],
-              ["$3,720", "still charged after she cancelled"],
+              ["26", "guests billed wrong, and one wrote in"],
+              ["$61,680", "owed back, across both companies' records"],
             ].map(([n, t]) => (
               <div key={t} className="py-8 sm:px-8 sm:first:pl-0">
                 <div className="font-display text-[2.8rem] font-medium tracking-[-0.03em]">{n}</div>

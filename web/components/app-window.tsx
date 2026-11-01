@@ -13,6 +13,13 @@ const PROBLEMS = [
   { text: "Cancelled, still charged", cost: "$3,720", owner: "Seaside Inn" },
 ];
 
+// From the real records: 26 RoomFinder bookings billed wrong since March.
+const HARM = [
+  { text: "Billed for the wrong nights", count: 5, cost: "$27,960" },
+  { text: "Billed twice", count: 9, cost: "$24,000" },
+  { text: "Billed after cancelling", count: 12, cost: "$9,720" },
+];
+
 const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } } as const;
 
 function Avatar({ label, tone }: { label: string; tone: "sea" | "sand" | "person" }) {
@@ -72,35 +79,36 @@ function PullRequest({ repo, num, title, reviewer, state }: { repo: string; num:
   );
 }
 
-// The one button in the story: signing. With `click`, the cursor presses Sign for Arjun.
-function Sign({ click }: { click: boolean }) {
-  const [signed, setSigned] = useState(!click);
+// A decision card with buttons only the right company can press. With `click`, the cursor presses the button.
+function Decision({ title, text, before, ask, done, click }: { title: string; text: string; before?: string; ask: string; done: string; click: boolean }) {
+  const [pressed, setPressed] = useState(!click);
   useEffect(() => {
     if (!click) return;
-    const t = setTimeout(() => setSigned(true), 1150);
+    const t = setTimeout(() => setPressed(true), 1150);
     return () => clearTimeout(t);
   }, [click]);
+  const chip = (label: string) => (
+    <span className="inline-flex items-center gap-1 rounded-md bg-[#e9f6ee] px-2.5 py-1 text-[11.5px] font-semibold text-[#1f9d55]">
+      <Check size={12} weight="bold" /> {label}
+    </span>
+  );
   return (
     <div className="relative mt-1.5 rounded-lg border border-[#e8e8ed] p-3">
-      <div className="text-[12px] font-semibold">Agreement: these 3 bookings must keep working</div>
-      <div className="mt-0.5 text-[12px] leading-snug text-[#424245]">Both sides saw them work after release. One person from each company signs.</div>
+      <div className="text-[12px] font-semibold">{title}</div>
+      <div className="mt-0.5 text-[12px] leading-snug text-[#424245]">{text}</div>
       <div className="mt-2.5 flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center gap-1 rounded-md bg-[#e9f6ee] px-2.5 py-1 text-[11.5px] font-semibold text-[#1f9d55]">
-          <Check size={12} weight="bold" /> Signed by Maria
-        </span>
-        {signed ? (
-          <motion.span {...enter} className="inline-flex items-center gap-1 rounded-md bg-[#e9f6ee] px-2.5 py-1 text-[11.5px] font-semibold text-[#1f9d55]">
-            <Check size={12} weight="bold" /> Signed by Arjun
-          </motion.span>
+        {before && chip(before)}
+        {pressed ? (
+          <motion.span {...enter}>{chip(done)}</motion.span>
         ) : (
-          <span className="rounded-md bg-[#1d1d1f] px-3 py-1 text-[11.5px] font-semibold text-white">Sign as Arjun</span>
+          <span className="rounded-md bg-[#1d1d1f] px-3 py-1 text-[11.5px] font-semibold text-white">{ask}</span>
         )}
       </div>
-      {click && !signed && (
+      {click && !pressed && (
         <motion.div
           className="pointer-events-none absolute"
           initial={{ left: "80%", top: "120%", opacity: 0 }}
-          animate={{ left: "52%", top: "74%", opacity: 1, scale: [1, 1, 0.82, 1] }}
+          animate={{ left: before ? "52%" : "18%", top: "74%", opacity: 1, scale: [1, 1, 0.82, 1] }}
           transition={{ duration: 1.1, ease: [0.45, 0, 0.2, 1], scale: { times: [0, 0.8, 0.9, 1], duration: 1.1 } }}
         >
           <Cursor size={20} weight="fill" className="text-[#1d1d1f] drop-shadow" />
@@ -113,7 +121,6 @@ function Sign({ click }: { click: boolean }) {
 function Board({ stage, clicking }: { stage: Stage; clicking: boolean }) {
   const status = (i: number) => {
     if (stage >= 4) return { label: "Fixed", cls: "text-[#1f9d55]" };
-    if (stage >= 3) return { label: "Merged", cls: "text-[#8250df]" };
     if (stage >= 2) return { label: "In review", cls: "text-[#b25e00]" };
     if (stage >= 1) return { label: "Found", cls: "text-[#e5484d]" };
     return { label: "Not checked yet", cls: "text-[#86868b]" };
@@ -135,7 +142,17 @@ function Board({ stage, clicking }: { stage: Stage; clicking: boolean }) {
           );
         })}
       </ul>
-      <div className="mt-5 border-t border-[#e8e8ed] pt-4 text-[12px]">
+      <div className="mt-4 border-t border-[#e8e8ed] pt-4 text-[12px]">
+        <div className="text-[#86868b]">Other guests it hit</div>
+        {stage >= 3 ? (
+          <motion.div {...enter} transition={{ ...enter.transition, delay: clicking && stage === 3 ? 1.2 : 0 }} className="mt-0.5 font-semibold text-[#1d1d1f]">
+            26 guests, $61,680 refunded
+          </motion.div>
+        ) : (
+          <div className="mt-0.5 text-[#424245]">Not counted yet</div>
+        )}
+      </div>
+      <div className="mt-4 border-t border-[#e8e8ed] pt-4 text-[12px]">
         {[
           ["Maria", "Seaside Inn"],
           ["Arjun", "RoomFinder"],
@@ -165,7 +182,6 @@ function Board({ stage, clicking }: { stage: Stage; clicking: boolean }) {
 /** The app window at one point in the story. `stage` decides what has happened so far. */
 /** `compact` drops the sidebar, for narrower spots on the page. */
 export function AppWindow({ stage, clicking = false, compact = false }: { stage: Stage; clicking?: boolean; compact?: boolean }) {
-  const pr = stage >= 3 ? "merged" : "open";
   const fixed = stage >= 4;
   return (
     <div className="overflow-hidden rounded-[14px] bg-white text-left shadow-[0_30px_80px_-36px_rgba(15,23,42,0.45)] ring-1 ring-black/[0.07]">
@@ -195,7 +211,14 @@ export function AppWindow({ stage, clicking = false, compact = false }: { stage:
           </div>
         </nav>
         <div className="flex min-w-0 flex-1 flex-col justify-end gap-3.5 overflow-hidden p-4 [mask-image:linear-gradient(to_bottom,transparent,black_14%)]">
-          <Msg who="Maria Lopez" tag="Seaside Inn" tone="person">@seaside-inn-agent please check our bookings with RoomFinder</Msg>
+          <Msg who="Maria Lopez" tag="Seaside Inn" tone="person">
+            @seaside-inn-agent A guest booked 1 night on RoomFinder for 3 April and we billed her $3,720. Can you find out what happened, with RoomFinder?
+          </Msg>
+          <motion.div {...enter} transition={{ ...enter.transition, delay: stage === 0 ? 1.1 : 0 }}>
+            <Msg who="seaside-inn-agent" tag="Seaside Inn · agent" tone="sea">
+              Found it: RoomFinder booking RF-2093 is in our system as 31 nights from March 4. Checking with RoomFinder.
+            </Msg>
+          </motion.div>
           {stage >= 1 && (
             <Msg who="seaside-inn-agent" tag="Seaside Inn · agent" tone="sea">
               <span className="font-semibold">I ran RoomFinder&apos;s 3 bookings on our system. {fixed ? "All 3 work now." : "3 would go wrong."}</span>
@@ -221,24 +244,52 @@ export function AppWindow({ stage, clicking = false, compact = false }: { stage:
           {stage >= 2 && stage < 4 && (
             <Msg who="roomfinder-agent" tag="RoomFinder · agent" tone="sand">
               Agreed. <span className="text-[#0071e3]">@arjun</span> two of these are ours. I opened a pull request in our repo.
-              <PullRequest repo="roomfinder/booking-api" num={142} title="Send dates month first, never retry a booking twice" reviewer="Arjun" state={pr} />
+              <PullRequest repo="roomfinder/booking-api" num={142} title="Send dates month first, never retry a booking twice" reviewer="Arjun" state="open" />
             </Msg>
           )}
           {stage >= 2 && stage < 4 && (
             <Msg who="seaside-inn-agent" tag="Seaside Inn · agent" tone="sea">
               One is ours. Pull request opened for our engineers.
-              <PullRequest repo="seaside-inn/bookings" num={88} title="Cancel by RoomFinder's booking number" reviewer="Seaside Inn" state={pr} />
+              <PullRequest repo="seaside-inn/bookings" num={88} title="Cancel by RoomFinder's booking number" reviewer="Seaside Inn" state="open" />
             </Msg>
+          )}
+          {stage === 3 && (
+            <Msg who="seaside-inn-agent" tag="Seaside Inn · agent" tone="sea">
+              <span className="font-semibold">She was not the only one. 26 RoomFinder bookings were billed wrong since March: $61,680 too much.</span>
+              <div className="mt-1">
+                {HARM.map((h) => (
+                  <Row key={h.text} ok={false}>
+                    {h.count} {h.text.toLowerCase()} <span className="text-[#86868b]">({h.cost})</span>
+                  </Row>
+                ))}
+              </div>
+              <div className="mt-1 text-[11.5px] text-[#86868b]">Compared by booking number and amount only. No guest names left either company.</div>
+              <Decision title="Refund 26 guests, $61,680?" text="Only Seaside Inn can press this." ask="Refund" done="Refunded by Maria" click={clicking} />
+            </Msg>
+          )}
+          {stage === 3 && (
+            <motion.div {...enter} transition={{ ...enter.transition, delay: clicking ? 1.8 : 0 }}>
+              <Msg who="roomfinder-agent" tag="RoomFinder · agent" tone="sand">
+                Our records give the same 26. <span className="text-[#0071e3]">@arjun</span> the apology emails are ready to send.
+              </Msg>
+            </motion.div>
           )}
           {stage === 4 && (
             <Msg who="roomfinder-agent" tag="RoomFinder · agent" tone="sand">
-              Both fixes are released. I ran the 3 bookings again from our side too. <span className="font-semibold">All 3 work.</span>
+              Both pull requests are merged and released. I ran the 3 bookings again from our side too. <span className="font-semibold">All 3 work.</span>
             </Msg>
           )}
           {stage >= 5 && (
             <Msg who="seaside-inn-agent" tag="Seaside Inn · agent" tone="sea">
               Both sides confirmed the fixes.
-              <Sign click={clicking && stage === 5} />
+              <Decision
+                title="Agreement: these 3 bookings must keep working"
+                text="Both sides saw them work after release. One person from each company signs."
+                before="Signed by Maria"
+                ask="Sign as Arjun"
+                done="Signed by Arjun"
+                click={clicking && stage === 5}
+              />
             </Msg>
           )}
           {stage >= 6 && (

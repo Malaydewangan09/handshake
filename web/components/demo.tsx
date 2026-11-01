@@ -4,13 +4,13 @@ import { useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { AppWindow, type Stage } from "./app-window";
 
-// The story as chapters, each held long enough to read. Stage 5 includes the cursor clicking Sign.
+// The story as chapters, each held long enough to read. Stages 3 and 5 include the cursor pressing a button.
 const CHAPTERS: { label: string; stage: Stage; ms: number }[] = [
-  { label: "Ask", stage: 0, ms: 1800 },
+  { label: "Complaint", stage: 0, ms: 3400 },
   { label: "Found", stage: 1, ms: 5600 },
-  { label: "Review", stage: 2, ms: 3400 },
-  { label: "Merged", stage: 3, ms: 2400 },
-  { label: "Checked", stage: 4, ms: 2800 },
+  { label: "Review", stage: 2, ms: 3000 },
+  { label: "Refunds", stage: 3, ms: 6400 },
+  { label: "Fixed", stage: 4, ms: 2800 },
   { label: "Signed", stage: 5, ms: 3200 },
   { label: "Guarded", stage: 6, ms: 4200 },
 ];
