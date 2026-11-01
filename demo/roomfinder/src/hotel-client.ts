@@ -22,17 +22,19 @@ export function toResult(res: Response): BookingResult {
   return { kind: "error" };
 }
 
-const headers = (apiKey: string) => ({ "Content-Type": "application/json", Authorization: `Bearer ${apiKey}`, "Request-Id": randomUUID() });
+const headers = (apiKey: string, requestId = randomUUID()) => ({ "Content-Type": "application/json", Authorization: `Bearer ${apiKey}`, "Request-Id": requestId });
 const ATTEMPTS = 2;
 
 export async function bookRoom(send: Transport, b: Booking, apiKey = process.env.SEASIDE_KEY ?? ""): Promise<BookingResult> {
+  // Seaside Inn only treats a resent booking as a repeat when it carries the same Request-Id.
+  const requestId = randomUUID();
   let lastError: unknown;
   for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
     try {
       const res = await send({
         method: "POST",
         path: "/reservations",
-        headers: headers(apiKey),
+        headers: headers(apiKey, requestId),
         body: { guest: b.guest, check_in: toHotelDate(b.checkIn, b.site), check_out: toHotelDate(b.checkOut, b.site), partner_ref: b.ref },
       });
       return toResult(res);
