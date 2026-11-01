@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { readFile, writeFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
-import type { Bundle, SealedContract, VerdictSet } from "./contract.ts";
-import { extract, gate, loadAdapter, seal, verify } from "./engine.ts";
-import { contractReport, gateReport, verdictReport } from "./report.ts";
+import type { Amounts, Bundle, SealedContract, VerdictSet } from "./contract.ts";
+import { amounts, extract, gate, impact, loadAdapter, seal, verify } from "./engine.ts";
+import { contractReport, gateReport, impactReport, verdictReport } from "./report.ts";
 
 const USAGE = `handshake: verify an integration against both companies' real code, without sharing source.
 
@@ -15,6 +15,10 @@ const USAGE = `handshake: verify an integration against both companies' real cod
       Combine both bundles and both verdict sets into one contract with a stable id.
   handshake gate <adapter.ts> <contract.json> [--md]
       Check your current code still honours a sealed contract. Exits 1 if not.
+  handshake amounts <adapter.ts> [-o amounts.json]
+      From your own records: what each customer agreed to pay, or was billed. Booking numbers and amounts only.
+  handshake impact <amounts.json> <amounts.json> [-o impact.json] [--md]
+      Compare both companies' amounts and list every customer billed wrong.
   handshake report <verdicts.json> | <contract.json>
       Print a chat-sized markdown summary.`;
 
@@ -68,6 +72,18 @@ async function main(argv: string[]): Promise<number> {
       const result = await gate(adapter, await readJson<SealedContract>(args[1]));
       process.stdout.write((values.md ? gateReport(adapter.company, result) : JSON.stringify(result, null, 2)) + "\n");
       return result.ok ? 0 : 1;
+    }
+    case "amounts": {
+      need(1);
+      await emit(await amounts(await loadAdapter(args[0])), values.out);
+      return 0;
+    }
+    case "impact": {
+      need(2);
+      const result = impact(await Promise.all(args.map((p) => readJson<Amounts>(p))));
+      if (values.out) await emit(result, values.out);
+      if (values.md || !values.out) process.stdout.write(values.md ? impactReport(result) + "\n" : JSON.stringify(result, null, 2) + "\n");
+      return 0;
     }
     case "report": {
       need(1);

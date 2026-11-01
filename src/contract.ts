@@ -57,6 +57,42 @@ export type SealedContract = {
   verdicts: VerdictSet[];
 };
 
+/** One booking or order, by the number both companies already know it by. No names, emails or card details. */
+export type AmountEntry = { ref: string; amount: number; note?: string };
+
+/** What one company's records say each customer owes ("agreed") or was billed ("billed"). */
+export type Amounts = {
+  version: 1;
+  company: string;
+  kind: "agreed" | "billed";
+  /** ISO 4217 code, e.g. "USD". */
+  currency: string;
+  entries: AmountEntry[];
+};
+
+export type HarmKind = "wrong-amount" | "billed-twice" | "owed-nothing";
+
+export type Harm = {
+  ref: string;
+  kind: HarmKind;
+  agreed: number;
+  billed: number;
+  agreedNote?: string;
+  billedNotes: string[];
+};
+
+/** Every customer the two companies' records disagree about. */
+export type Impact = {
+  version: 1;
+  agreedBy: string;
+  billedBy: string;
+  currency: string;
+  checked: number;
+  harmed: Harm[];
+  /** Billed minus agreed, summed over customers billed too much. */
+  overbilled: number;
+};
+
 /** Written by each company, next to its own code. */
 export type Adapter = {
   company: string;
@@ -66,6 +102,8 @@ export type Adapter = {
   apply(c: Case): Promise<Json>;
   /** Optional: say what a result means in plain words, e.g. "charge ¥500,000". Used in chat reports. */
   describe?(kind: string, value: Json): string | undefined;
+  /** Optional: what the company's own records say each customer agreed to pay, or was billed. */
+  amounts?(): Promise<Omit<Amounts, "version" | "company">>;
 };
 
 export const unsupported = (kind: string): Json => ({ unsupported: kind });

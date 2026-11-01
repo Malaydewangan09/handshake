@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { aliasRandomIds, equal, hash } from "./canonical.ts";
-import type { Adapter, Bundle, Case, Json, SealedContract, Verdict, VerdictSet } from "./contract.ts";
+import type { Adapter, AmountEntry, Amounts, Bundle, Case, Harm, Impact, Json, SealedContract, Verdict, VerdictSet } from "./contract.ts";
 
 const SECRET_HEADERS = new Set(["authorization", "cookie", "x-api-key", "proxy-authorization"]);
 
@@ -118,4 +118,39 @@ export async function gate(adapter: Adapter, contract: SealedContract): Promise<
   ].map((c) => ({ id: c.id, title: c.title }));
 
   return { ok: regressions.length === 0 && changedCases.length === 0, contractId: contract.id, regressions, changedCases };
+}
+
+export async function amounts(adapter: Adapter): Promise<Amounts> {
+  if (!adapter.amounts) throw new Error(`${adapter.company}'s adapter has no amounts()`);
+  const { kind, currency, entries } = await adapter.amounts();
+  return { version: 1, company: adapter.company, kind, currency, entries };
+}
+
+/** Compare what customers agreed to pay on one side with what the other side billed them, booking by booking. */
+export function impact(sides: Amounts[]): Impact {
+  const agreed = sides.find((s) => s.kind === "agreed");
+  const billed = sides.find((s) => s.kind === "billed");
+  if (sides.length !== 2 || !agreed || !billed) throw new Error("impact needs one agreed and one billed amounts file");
+  if (agreed.currency !== billed.currency) throw new Error(`${agreed.company} counts in ${agreed.currency} and ${billed.company} in ${billed.currency}`);
+
+  const owed = new Map<string, AmountEntry>();
+  for (const e of agreed.entries) {
+    if (owed.has(e.ref)) throw new Error(`${agreed.company} lists booking ${e.ref} twice`);
+    owed.set(e.ref, e);
+  }
+  const bills = Map.groupBy(billed.entries, (e) => e.ref);
+
+  const harmed: Harm[] = [];
+  for (const ref of new Set([...owed.keys(), ...bills.keys()])) {
+    const a = owed.get(ref);
+    const bs = bills.get(ref) ?? [];
+    const agreedAmount = a?.amount ?? 0;
+    const billedAmount = bs.reduce((sum, b) => sum + b.amount, 0);
+    if (agreedAmount === billedAmount) continue;
+    const kind = bs.length > 1 ? "billed-twice" : agreedAmount === 0 ? "owed-nothing" : "wrong-amount";
+    harmed.push({ ref, kind, agreed: agreedAmount, billed: billedAmount, ...(a?.note && { agreedNote: a.note }), billedNotes: bs.flatMap((b) => (b.note ? [b.note] : [])) });
+  }
+  harmed.sort((x, y) => x.ref.localeCompare(y.ref));
+  const overbilled = harmed.reduce((sum, h) => sum + Math.max(0, h.billed - h.agreed), 0);
+  return { version: 1, agreedBy: agreed.company, billedBy: billed.company, currency: agreed.currency, checked: owed.size, harmed, overbilled };
 }

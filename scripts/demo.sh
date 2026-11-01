@@ -21,3 +21,8 @@ $H seal "$OUT/seaside.bundle.json" "$OUT/roomfinder.bundle.json" "$OUT/seaside.v
 
 echo; echo "== Seaside Inn's pre-deploy gate"
 $H gate demo/seaside-inn/handshake.config.ts "$OUT/contract.json" --md
+
+echo; echo "== Who else did it hit? Both companies' records, by booking number and amount only"
+$H amounts demo/roomfinder/handshake.config.ts -o "$OUT/roomfinder.amounts.json"
+$H amounts demo/seaside-inn/handshake.config.ts -o "$OUT/seaside.amounts.json"
+$H impact "$OUT/roomfinder.amounts.json" "$OUT/seaside.amounts.json" -o "$OUT/impact.json" --md

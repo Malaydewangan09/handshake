@@ -1,5 +1,5 @@
 import { canonical } from "./canonical.ts";
-import type { SealedContract, Verdict, VerdictSet } from "./contract.ts";
+import type { HarmKind, Impact, SealedContract, Verdict, VerdictSet } from "./contract.ts";
 import type { GateResult } from "./engine.ts";
 
 // Chat reports are read by people who are not engineers: titles and plain words, no ids, JSON or hashes,
@@ -35,4 +35,21 @@ export function gateReport(company: string, g: GateResult): string {
   const changed = g.changedCases.length;
   if (changed) lines.push("", `${company} also behaves differently in ${changed} of its own test case${changed === 1 ? "" : "s"}, so the other company needs to check ${changed === 1 ? "it" : "them"} again.`);
   return lines.join("\n");
+}
+
+const HARM: Record<HarmKind, string> = {
+  "wrong-amount": "billed the wrong amount",
+  "billed-twice": "billed twice",
+  "owed-nothing": "billed though they owed nothing",
+};
+
+export function impactReport(i: Impact): string {
+  const money = (n: number) => n.toLocaleString("en-US", { style: "currency", currency: i.currency, maximumFractionDigits: 0 });
+  if (i.harmed.length === 0) return `✅ **All ${i.checked} ${i.agreedBy} bookings were billed right by ${i.billedBy}.**`;
+  const head = `**${i.harmed.length} of ${i.checked} ${i.agreedBy} bookings were billed wrong by ${i.billedBy}: ${money(i.overbilled)} too much.**`;
+  const lines = (Object.keys(HARM) as HarmKind[]).flatMap((k) => {
+    const group = i.harmed.filter((h) => h.kind === k);
+    return group.length ? [`- ${group.length} ${HARM[k]}: ${money(group.reduce((s, h) => s + Math.max(0, h.billed - h.agreed), 0))}`] : [];
+  });
+  return [head, "", ...lines, "", "Compared by booking number and amount only. No names, emails or card details left either company."].join("\n");
 }

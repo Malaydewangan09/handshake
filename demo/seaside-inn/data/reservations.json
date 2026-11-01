@@ -1,0 +1,2126 @@
+[
+  {
+    "id": "r_0001",
+    "guest": "Will Okafor",
+    "partnerRef": "RF-2001",
+    "checkIn": "2026-04-03",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0002",
+    "guest": "Ana Okafor",
+    "partnerRef": "RF-2002",
+    "checkIn": "2026-03-18",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0003",
+    "guest": "Julia Costa",
+    "partnerRef": "RF-2004",
+    "checkIn": "2026-07-22",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0004",
+    "guest": "Quinn Rossi",
+    "partnerRef": "RF-2005",
+    "checkIn": "2026-05-22",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0005",
+    "guest": "Priya Okafor",
+    "partnerRef": "RF-2006",
+    "checkIn": "2026-09-07",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0006",
+    "guest": "Priya Müller",
+    "partnerRef": "RF-2007",
+    "checkIn": "2026-07-29",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0007",
+    "guest": "Emma Okafor",
+    "partnerRef": "RF-2008",
+    "checkIn": "2026-08-12",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0008",
+    "guest": "Emma Khan",
+    "partnerRef": "RF-2010",
+    "checkIn": "2026-03-03",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0009",
+    "guest": "Priya Tanaka",
+    "partnerRef": "RF-2012",
+    "checkIn": "2026-07-09",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0010",
+    "guest": "Priya Tanaka",
+    "partnerRef": "RF-2012",
+    "checkIn": "2026-07-09",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0011",
+    "guest": "Julia Garcia",
+    "partnerRef": "RF-2013",
+    "checkIn": "2026-09-04",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0012",
+    "guest": "Umar Tanaka",
+    "partnerRef": "RF-2014",
+    "checkIn": "2026-07-21",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0013",
+    "guest": "Umar Tanaka",
+    "partnerRef": "RF-2014",
+    "checkIn": "2026-07-21",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0014",
+    "guest": "Nadia Silva",
+    "partnerRef": "RF-2015",
+    "checkIn": "2026-03-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0015",
+    "guest": "Omar Novak",
+    "partnerRef": "RF-2016",
+    "checkIn": "2026-03-11",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0016",
+    "guest": "Lena Costa",
+    "partnerRef": "RF-2017",
+    "checkIn": "2026-04-02",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0017",
+    "guest": "Lena Novak",
+    "partnerRef": "RF-2018",
+    "checkIn": "2026-05-05",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0018",
+    "guest": "Chloe Müller",
+    "partnerRef": "RF-2019",
+    "checkIn": "2026-04-06",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0019",
+    "guest": "George Larsen",
+    "partnerRef": "RF-2020",
+    "checkIn": "2026-08-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0020",
+    "guest": "Priya Martin",
+    "partnerRef": "RF-2021",
+    "checkIn": "2026-06-17",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0021",
+    "guest": "Ivan Mendes",
+    "partnerRef": "RF-2023",
+    "checkIn": "2026-04-20",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0022",
+    "guest": "Daniel Patel",
+    "partnerRef": "RF-2024",
+    "checkIn": "2026-05-12",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0023",
+    "guest": "Omar Martin",
+    "partnerRef": "RF-2025",
+    "checkIn": "2026-09-18",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0024",
+    "guest": "Kofi Dubois",
+    "partnerRef": "RF-2026",
+    "checkIn": "2026-09-15",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0025",
+    "guest": "Quinn Rossi",
+    "partnerRef": "RF-2027",
+    "checkIn": "2026-08-11",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0026",
+    "guest": "George Larsen",
+    "partnerRef": "RF-2028",
+    "checkIn": "2026-10-06",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0027",
+    "guest": "Priya Martin",
+    "partnerRef": "RF-2029",
+    "checkIn": "2026-08-01",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0028",
+    "guest": "Tara Costa",
+    "partnerRef": "RF-2030",
+    "checkIn": "2026-03-22",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0029",
+    "guest": "Priya Larsen",
+    "partnerRef": "RF-2031",
+    "checkIn": "2026-10-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0030",
+    "guest": "Lena Costa",
+    "partnerRef": "RF-2032",
+    "checkIn": "2026-04-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0031",
+    "guest": "George Tanaka",
+    "partnerRef": "RF-2033",
+    "checkIn": "2026-03-30",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0032",
+    "guest": "Zoe Khan",
+    "partnerRef": "RF-2034",
+    "checkIn": "2026-09-15",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0033",
+    "guest": "Ivan Larsen",
+    "partnerRef": "RF-2035",
+    "checkIn": "2026-07-11",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0034",
+    "guest": "George Dubois",
+    "partnerRef": "RF-2036",
+    "checkIn": "2026-04-07",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0035",
+    "guest": "Ben Hughes",
+    "partnerRef": "RF-2037",
+    "checkIn": "2026-09-29",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0036",
+    "guest": "Farah Garcia",
+    "partnerRef": "RF-2038",
+    "checkIn": "2026-05-18",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0037",
+    "guest": "Kofi Khan",
+    "partnerRef": "RF-2039",
+    "checkIn": "2026-10-15",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0038",
+    "guest": "Farah Garcia",
+    "partnerRef": "RF-2040",
+    "checkIn": "2026-04-18",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0039",
+    "guest": "Omar Okafor",
+    "partnerRef": "RF-2041",
+    "checkIn": "2026-09-19",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0040",
+    "guest": "Hana Larsen",
+    "partnerRef": "RF-2042",
+    "checkIn": "2026-10-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0041",
+    "guest": "Emma Patel",
+    "partnerRef": "RF-2043",
+    "checkIn": "2026-04-07",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0042",
+    "guest": "Emma Patel",
+    "partnerRef": "RF-2043",
+    "checkIn": "2026-04-07",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0043",
+    "guest": "Lena Mendes",
+    "partnerRef": "RF-2044",
+    "checkIn": "2026-07-27",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0044",
+    "guest": "Farah Brown",
+    "partnerRef": "RF-2045",
+    "checkIn": "2026-10-22",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0045",
+    "guest": "Farah Brown",
+    "partnerRef": "RF-2045",
+    "checkIn": "2026-10-22",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0046",
+    "guest": "Kofi Rossi",
+    "partnerRef": "RF-2046",
+    "checkIn": "2026-07-02",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0047",
+    "guest": "Omar Costa",
+    "partnerRef": "RF-2047",
+    "checkIn": "2026-10-03",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0048",
+    "guest": "Sam Müller",
+    "partnerRef": "RF-2048",
+    "checkIn": "2026-07-08",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0049",
+    "guest": "Ben Khan",
+    "partnerRef": "RF-2049",
+    "checkIn": "2026-05-22",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0050",
+    "guest": "Emma Novak",
+    "partnerRef": "RF-2050",
+    "checkIn": "2026-06-06",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0051",
+    "guest": "Marco Okafor",
+    "partnerRef": "RF-2051",
+    "checkIn": "2026-09-20",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0052",
+    "guest": "Yuki Dubois",
+    "partnerRef": "RF-2052",
+    "checkIn": "2026-07-14",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0053",
+    "guest": "Tara Hughes",
+    "partnerRef": "RF-2054",
+    "checkIn": "2026-10-07",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0054",
+    "guest": "Priya Mendes",
+    "partnerRef": "RF-2055",
+    "checkIn": "2026-03-09",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0055",
+    "guest": "Farah Okafor",
+    "partnerRef": "RF-2056",
+    "checkIn": "2026-09-05",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0056",
+    "guest": "Emma Brown",
+    "partnerRef": "RF-2057",
+    "checkIn": "2026-05-03",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0057",
+    "guest": "Priya Novak",
+    "partnerRef": "RF-2058",
+    "checkIn": "2026-05-16",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0058",
+    "guest": "Kofi Dubois",
+    "partnerRef": "RF-2060",
+    "checkIn": "2026-05-12",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0059",
+    "guest": "Ana Costa",
+    "partnerRef": "RF-2061",
+    "checkIn": "2026-05-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0060",
+    "guest": "Julia Tanaka",
+    "partnerRef": "RF-2062",
+    "checkIn": "2026-07-08",
+    "nights": 31,
+    "total": 3720,
+    "status": "booked"
+  },
+  {
+    "id": "r_0061",
+    "guest": "Julia Tanaka",
+    "partnerRef": "RF-2062",
+    "checkIn": "2026-07-08",
+    "nights": 31,
+    "total": 3720,
+    "status": "booked"
+  },
+  {
+    "id": "r_0062",
+    "guest": "Ana Müller",
+    "partnerRef": "RF-2063",
+    "checkIn": "2026-06-24",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0063",
+    "guest": "George Tanaka",
+    "partnerRef": "RF-2064",
+    "checkIn": "2026-05-21",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0064",
+    "guest": "Farah Dubois",
+    "partnerRef": "RF-2065",
+    "checkIn": "2026-08-24",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0065",
+    "guest": "Hana Rossi",
+    "partnerRef": "RF-2066",
+    "checkIn": "2026-09-13",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0066",
+    "guest": "Zoe Dubois",
+    "partnerRef": "RF-2067",
+    "checkIn": "2026-03-08",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0067",
+    "guest": "Ivan Brown",
+    "partnerRef": "RF-2068",
+    "checkIn": "2026-04-03",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0068",
+    "guest": "Nadia Brown",
+    "partnerRef": "RF-2069",
+    "checkIn": "2026-08-24",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0069",
+    "guest": "George Silva",
+    "partnerRef": "RF-2070",
+    "checkIn": "2026-03-18",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0070",
+    "guest": "Rosa Khan",
+    "partnerRef": "RF-2071",
+    "checkIn": "2026-08-26",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0071",
+    "guest": "Tara Okafor",
+    "partnerRef": "RF-2072",
+    "checkIn": "2026-08-07",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0072",
+    "guest": "Julia Müller",
+    "partnerRef": "RF-2073",
+    "checkIn": "2026-06-25",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0073",
+    "guest": "Julia Costa",
+    "partnerRef": "RF-2074",
+    "checkIn": "2026-07-26",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0074",
+    "guest": "Nadia Rossi",
+    "partnerRef": "RF-2075",
+    "checkIn": "2026-06-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0075",
+    "guest": "Sam Mendes",
+    "partnerRef": "RF-2076",
+    "checkIn": "2026-08-03",
+    "nights": 31,
+    "total": 3720,
+    "status": "booked"
+  },
+  {
+    "id": "r_0076",
+    "guest": "George Garcia",
+    "partnerRef": "RF-2077",
+    "checkIn": "2026-03-11",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0077",
+    "guest": "Yuki Khan",
+    "partnerRef": "RF-2078",
+    "checkIn": "2026-05-14",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0078",
+    "guest": "Julia Okafor",
+    "partnerRef": "RF-2079",
+    "checkIn": "2026-09-15",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0079",
+    "guest": "Yuki Khan",
+    "partnerRef": "RF-2080",
+    "checkIn": "2026-03-05",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0080",
+    "guest": "Kofi Dubois",
+    "partnerRef": "RF-2081",
+    "checkIn": "2026-08-11",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0081",
+    "guest": "Omar Okafor",
+    "partnerRef": "RF-2082",
+    "checkIn": "2026-03-17",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0082",
+    "guest": "Tara Silva",
+    "partnerRef": "RF-2083",
+    "checkIn": "2026-03-06",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0083",
+    "guest": "Chloe Brown",
+    "partnerRef": "RF-2084",
+    "checkIn": "2026-09-22",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0084",
+    "guest": "Chloe Brown",
+    "partnerRef": "RF-2084",
+    "checkIn": "2026-09-22",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0085",
+    "guest": "Julia Larsen",
+    "partnerRef": "RF-2085",
+    "checkIn": "2026-04-14",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0086",
+    "guest": "Lena Rossi",
+    "partnerRef": "RF-2086",
+    "checkIn": "2026-07-02",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0087",
+    "guest": "Hana Tanaka",
+    "partnerRef": "RF-2087",
+    "checkIn": "2026-05-10",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0088",
+    "guest": "Ana Okafor",
+    "partnerRef": "RF-2088",
+    "checkIn": "2026-09-22",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0089",
+    "guest": "Quinn Brown",
+    "partnerRef": "RF-2089",
+    "checkIn": "2026-06-05",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0090",
+    "guest": "Marco Müller",
+    "partnerRef": "RF-2090",
+    "checkIn": "2026-05-08",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0091",
+    "guest": "Yuki Khan",
+    "partnerRef": "RF-2091",
+    "checkIn": "2026-08-18",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0092",
+    "guest": "Ben Patel",
+    "partnerRef": "RF-2092",
+    "checkIn": "2026-09-30",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0093",
+    "guest": "Ana Silva",
+    "partnerRef": "RF-2093",
+    "checkIn": "2026-03-04",
+    "nights": 31,
+    "total": 3720,
+    "status": "booked"
+  },
+  {
+    "id": "r_0094",
+    "guest": "Ana Khan",
+    "partnerRef": "RF-2094",
+    "checkIn": "2026-09-29",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0095",
+    "guest": "Ana Novak",
+    "partnerRef": "RF-2095",
+    "checkIn": "2026-10-01",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0096",
+    "guest": "Ivan Mendes",
+    "partnerRef": "RF-2096",
+    "checkIn": "2026-07-15",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0097",
+    "guest": "Marco Silva",
+    "partnerRef": "RF-2097",
+    "checkIn": "2026-03-23",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0098",
+    "guest": "Vera Martin",
+    "partnerRef": "RF-2098",
+    "checkIn": "2026-08-03",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0099",
+    "guest": "Daniel Dubois",
+    "partnerRef": "RF-2099",
+    "checkIn": "2026-04-21",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0100",
+    "guest": "Zoe Dubois",
+    "partnerRef": "RF-2100",
+    "checkIn": "2026-04-14",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0101",
+    "guest": "Yuki Martin",
+    "partnerRef": "RF-2101",
+    "checkIn": "2026-03-26",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0102",
+    "guest": "Omar Larsen",
+    "partnerRef": "RF-2102",
+    "checkIn": "2026-09-27",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0103",
+    "guest": "Julia Dubois",
+    "partnerRef": "RF-2103",
+    "checkIn": "2026-02-10",
+    "nights": 59,
+    "total": 7080,
+    "status": "booked"
+  },
+  {
+    "id": "r_0104",
+    "guest": "Vera Müller",
+    "partnerRef": "RF-2105",
+    "checkIn": "2026-07-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0105",
+    "guest": "Ivan Tanaka",
+    "partnerRef": "RF-2106",
+    "checkIn": "2026-07-20",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0106",
+    "guest": "Farah Novak",
+    "partnerRef": "RF-2107",
+    "checkIn": "2026-08-21",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0107",
+    "guest": "Ana Khan",
+    "partnerRef": "RF-2108",
+    "checkIn": "2026-04-02",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0108",
+    "guest": "Ben Silva",
+    "partnerRef": "RF-2109",
+    "checkIn": "2026-07-29",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0109",
+    "guest": "Daniel Tanaka",
+    "partnerRef": "RF-2110",
+    "checkIn": "2026-06-15",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0110",
+    "guest": "Ana Brown",
+    "partnerRef": "RF-2111",
+    "checkIn": "2026-05-29",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0111",
+    "guest": "Tara Mendes",
+    "partnerRef": "RF-2112",
+    "checkIn": "2026-07-15",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0112",
+    "guest": "Julia Khan",
+    "partnerRef": "RF-2113",
+    "checkIn": "2026-09-03",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0113",
+    "guest": "Umar Martin",
+    "partnerRef": "RF-2114",
+    "checkIn": "2026-07-01",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0114",
+    "guest": "Yuki Costa",
+    "partnerRef": "RF-2115",
+    "checkIn": "2026-08-17",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0115",
+    "guest": "Quinn Patel",
+    "partnerRef": "RF-2116",
+    "checkIn": "2026-09-21",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0116",
+    "guest": "Yuki Hughes",
+    "partnerRef": "RF-2117",
+    "checkIn": "2026-08-01",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0117",
+    "guest": "Julia Costa",
+    "partnerRef": "RF-2118",
+    "checkIn": "2026-04-24",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0118",
+    "guest": "Tara Khan",
+    "partnerRef": "RF-2119",
+    "checkIn": "2026-09-09",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0119",
+    "guest": "Will Dubois",
+    "partnerRef": "RF-2120",
+    "checkIn": "2026-05-05",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0120",
+    "guest": "Sam Müller",
+    "partnerRef": "RF-2121",
+    "checkIn": "2026-09-13",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0121",
+    "guest": "Emma Martin",
+    "partnerRef": "RF-2122",
+    "checkIn": "2026-03-02",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0122",
+    "guest": "George Garcia",
+    "partnerRef": "RF-2123",
+    "checkIn": "2026-06-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0123",
+    "guest": "Ana Garcia",
+    "partnerRef": "RF-2125",
+    "checkIn": "2026-05-11",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0124",
+    "guest": "Omar Khan",
+    "partnerRef": "RF-2126",
+    "checkIn": "2026-08-07",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0125",
+    "guest": "Kofi Martin",
+    "partnerRef": "RF-2127",
+    "checkIn": "2026-08-11",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0126",
+    "guest": "Hana Brown",
+    "partnerRef": "RF-2128",
+    "checkIn": "2026-08-15",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0127",
+    "guest": "Priya Larsen",
+    "partnerRef": "RF-2129",
+    "checkIn": "2026-09-16",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0128",
+    "guest": "Ana Martin",
+    "partnerRef": "RF-2130",
+    "checkIn": "2026-09-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0129",
+    "guest": "Farah Khan",
+    "partnerRef": "RF-2131",
+    "checkIn": "2026-03-10",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0130",
+    "guest": "George Larsen",
+    "partnerRef": "RF-2132",
+    "checkIn": "2026-07-23",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0131",
+    "guest": "Lena Rossi",
+    "partnerRef": "RF-2134",
+    "checkIn": "2026-10-10",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0132",
+    "guest": "Julia Rossi",
+    "partnerRef": "RF-2135",
+    "checkIn": "2026-08-10",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0133",
+    "guest": "Priya Müller",
+    "partnerRef": "RF-2136",
+    "checkIn": "2026-10-20",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0134",
+    "guest": "Umar Hughes",
+    "partnerRef": "RF-2137",
+    "checkIn": "2026-09-29",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0135",
+    "guest": "Nadia Hughes",
+    "partnerRef": "RF-2138",
+    "checkIn": "2026-08-24",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0136",
+    "guest": "Daniel Martin",
+    "partnerRef": "RF-2139",
+    "checkIn": "2026-08-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0137",
+    "guest": "Farah Garcia",
+    "partnerRef": "RF-2140",
+    "checkIn": "2026-05-02",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0138",
+    "guest": "Emma Brown",
+    "partnerRef": "RF-2141",
+    "checkIn": "2026-07-08",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0139",
+    "guest": "Marco Patel",
+    "partnerRef": "RF-2142",
+    "checkIn": "2026-03-02",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0140",
+    "guest": "Nadia Tanaka",
+    "partnerRef": "RF-2143",
+    "checkIn": "2026-08-24",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0141",
+    "guest": "Tara Brown",
+    "partnerRef": "RF-2144",
+    "checkIn": "2026-04-09",
+    "nights": 61,
+    "total": 7320,
+    "status": "booked"
+  },
+  {
+    "id": "r_0142",
+    "guest": "Tara Brown",
+    "partnerRef": "RF-2144",
+    "checkIn": "2026-04-09",
+    "nights": 61,
+    "total": 7320,
+    "status": "booked"
+  },
+  {
+    "id": "r_0143",
+    "guest": "Emma Brown",
+    "partnerRef": "RF-2145",
+    "checkIn": "2026-09-25",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0144",
+    "guest": "Ben Silva",
+    "partnerRef": "RF-2146",
+    "checkIn": "2026-05-25",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0145",
+    "guest": "Umar Rossi",
+    "partnerRef": "RF-2147",
+    "checkIn": "2026-04-16",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0146",
+    "guest": "Omar Hughes",
+    "partnerRef": "RF-2148",
+    "checkIn": "2026-07-27",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0147",
+    "guest": "Kofi Khan",
+    "partnerRef": "RF-2149",
+    "checkIn": "2026-08-10",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0148",
+    "guest": "Hana Costa",
+    "partnerRef": "RF-2150",
+    "checkIn": "2026-04-21",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0149",
+    "guest": "Julia Dubois",
+    "partnerRef": "RF-2151",
+    "checkIn": "2026-09-05",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0150",
+    "guest": "Ben Tanaka",
+    "partnerRef": "RF-2152",
+    "checkIn": "2026-07-31",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0151",
+    "guest": "Emma Novak",
+    "partnerRef": "RF-2153",
+    "checkIn": "2026-10-22",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0152",
+    "guest": "Emma Müller",
+    "partnerRef": "RF-2154",
+    "checkIn": "2026-08-17",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0153",
+    "guest": "Yuki Silva",
+    "partnerRef": "RF-2156",
+    "checkIn": "2026-06-30",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0154",
+    "guest": "Julia Okafor",
+    "partnerRef": "RF-2157",
+    "checkIn": "2026-09-23",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0155",
+    "guest": "Rosa Novak",
+    "partnerRef": "RF-2158",
+    "checkIn": "2026-09-08",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0156",
+    "guest": "Rosa Martin",
+    "partnerRef": "RF-2159",
+    "checkIn": "2026-05-17",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0157",
+    "guest": "Daniel Garcia",
+    "partnerRef": "RF-2160",
+    "checkIn": "2026-03-21",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0158",
+    "guest": "Sam Khan",
+    "partnerRef": "RF-2161",
+    "checkIn": "2026-07-16",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0159",
+    "guest": "Ben Larsen",
+    "partnerRef": "RF-2162",
+    "checkIn": "2026-05-07",
+    "nights": 61,
+    "total": 7320,
+    "status": "booked"
+  },
+  {
+    "id": "r_0160",
+    "guest": "Zoe Novak",
+    "partnerRef": "RF-2163",
+    "checkIn": "2026-06-12",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0161",
+    "guest": "Will Dubois",
+    "partnerRef": "RF-2164",
+    "checkIn": "2026-03-31",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0162",
+    "guest": "Omar Müller",
+    "partnerRef": "RF-2165",
+    "checkIn": "2026-08-31",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0163",
+    "guest": "Nadia Larsen",
+    "partnerRef": "RF-2166",
+    "checkIn": "2026-08-06",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0164",
+    "guest": "Kofi Tanaka",
+    "partnerRef": "RF-2167",
+    "checkIn": "2026-04-13",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0165",
+    "guest": "Yuki Dubois",
+    "partnerRef": "RF-2168",
+    "checkIn": "2026-07-09",
+    "nights": 62,
+    "total": 7440,
+    "status": "booked"
+  },
+  {
+    "id": "r_0166",
+    "guest": "Farah Khan",
+    "partnerRef": "RF-2169",
+    "checkIn": "2026-09-10",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0167",
+    "guest": "Omar Tanaka",
+    "partnerRef": "RF-2170",
+    "checkIn": "2026-04-10",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0168",
+    "guest": "Umar Mendes",
+    "partnerRef": "RF-2171",
+    "checkIn": "2026-03-04",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0169",
+    "guest": "Priya Martin",
+    "partnerRef": "RF-2173",
+    "checkIn": "2026-04-12",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0170",
+    "guest": "Nadia Brown",
+    "partnerRef": "RF-2175",
+    "checkIn": "2026-08-01",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0171",
+    "guest": "Chloe Martin",
+    "partnerRef": "RF-2176",
+    "checkIn": "2026-04-21",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0172",
+    "guest": "George Novak",
+    "partnerRef": "RF-2177",
+    "checkIn": "2026-03-29",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0173",
+    "guest": "Lena Silva",
+    "partnerRef": "RF-2178",
+    "checkIn": "2026-04-07",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0174",
+    "guest": "Hana Okafor",
+    "partnerRef": "RF-2179",
+    "checkIn": "2026-05-31",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0175",
+    "guest": "Yuki Martin",
+    "partnerRef": "RF-2180",
+    "checkIn": "2026-07-09",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0176",
+    "guest": "Rosa Khan",
+    "partnerRef": "RF-2181",
+    "checkIn": "2026-09-06",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0177",
+    "guest": "Ana Hughes",
+    "partnerRef": "RF-2182",
+    "checkIn": "2026-07-28",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0178",
+    "guest": "Zoe Mendes",
+    "partnerRef": "RF-2183",
+    "checkIn": "2026-07-09",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0179",
+    "guest": "Umar Brown",
+    "partnerRef": "RF-2184",
+    "checkIn": "2026-08-11",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0180",
+    "guest": "Rosa Brown",
+    "partnerRef": "RF-2185",
+    "checkIn": "2026-03-03",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0181",
+    "guest": "Lena Patel",
+    "partnerRef": "RF-2186",
+    "checkIn": "2026-03-10",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0182",
+    "guest": "Zoe Costa",
+    "partnerRef": "RF-2187",
+    "checkIn": "2026-08-31",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0183",
+    "guest": "Tara Rossi",
+    "partnerRef": "RF-2188",
+    "checkIn": "2026-07-04",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0184",
+    "guest": "Tara Rossi",
+    "partnerRef": "RF-2189",
+    "checkIn": "2026-03-18",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0185",
+    "guest": "Chloe Rossi",
+    "partnerRef": "RF-2190",
+    "checkIn": "2026-04-15",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0186",
+    "guest": "Omar Garcia",
+    "partnerRef": "RF-2191",
+    "checkIn": "2026-07-14",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0187",
+    "guest": "Umar Larsen",
+    "partnerRef": "RF-2192",
+    "checkIn": "2026-10-07",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0188",
+    "guest": "Vera Silva",
+    "partnerRef": "RF-2193",
+    "checkIn": "2026-09-04",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0189",
+    "guest": "Umar Mendes",
+    "partnerRef": "RF-2194",
+    "checkIn": "2026-09-09",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0190",
+    "guest": "Sam Garcia",
+    "partnerRef": "RF-2195",
+    "checkIn": "2026-09-13",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0191",
+    "guest": "Quinn Tanaka",
+    "partnerRef": "RF-2196",
+    "checkIn": "2026-05-09",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0192",
+    "guest": "Rosa Okafor",
+    "partnerRef": "RF-2197",
+    "checkIn": "2026-06-01",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0193",
+    "guest": "Daniel Okafor",
+    "partnerRef": "RF-2198",
+    "checkIn": "2026-06-05",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0194",
+    "guest": "Quinn Hughes",
+    "partnerRef": "RF-2199",
+    "checkIn": "2026-03-23",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0195",
+    "guest": "Hana Rossi",
+    "partnerRef": "RF-2200",
+    "checkIn": "2026-03-13",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0196",
+    "guest": "Emma Tanaka",
+    "partnerRef": "RF-2201",
+    "checkIn": "2026-08-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0197",
+    "guest": "Vera Dubois",
+    "partnerRef": "RF-2202",
+    "checkIn": "2026-05-17",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0198",
+    "guest": "Yuki Müller",
+    "partnerRef": "RF-2203",
+    "checkIn": "2026-10-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0199",
+    "guest": "Ivan Müller",
+    "partnerRef": "RF-2204",
+    "checkIn": "2026-08-02",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0200",
+    "guest": "Ivan Müller",
+    "partnerRef": "RF-2204",
+    "checkIn": "2026-08-02",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0201",
+    "guest": "Quinn Garcia",
+    "partnerRef": "RF-2205",
+    "checkIn": "2026-06-26",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0202",
+    "guest": "Priya Khan",
+    "partnerRef": "RF-2206",
+    "checkIn": "2026-08-12",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0203",
+    "guest": "Vera Silva",
+    "partnerRef": "RF-2207",
+    "checkIn": "2026-06-02",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0204",
+    "guest": "Will Novak",
+    "partnerRef": "RF-2208",
+    "checkIn": "2026-05-31",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0205",
+    "guest": "Priya Novak",
+    "partnerRef": "RF-2209",
+    "checkIn": "2026-05-07",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0206",
+    "guest": "Zoe Okafor",
+    "partnerRef": "RF-2210",
+    "checkIn": "2026-06-11",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0207",
+    "guest": "Zoe Okafor",
+    "partnerRef": "RF-2210",
+    "checkIn": "2026-06-11",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0208",
+    "guest": "Quinn Patel",
+    "partnerRef": "RF-2211",
+    "checkIn": "2026-05-23",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0209",
+    "guest": "Ivan Martin",
+    "partnerRef": "RF-2212",
+    "checkIn": "2026-06-11",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0210",
+    "guest": "Vera Hughes",
+    "partnerRef": "RF-2213",
+    "checkIn": "2026-06-12",
+    "nights": 3,
+    "total": 360,
+    "status": "booked"
+  },
+  {
+    "id": "r_0211",
+    "guest": "Lena Martin",
+    "partnerRef": "RF-2214",
+    "checkIn": "2026-04-19",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0212",
+    "guest": "Julia Silva",
+    "partnerRef": "RF-2215",
+    "checkIn": "2026-08-03",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0213",
+    "guest": "Nadia Hughes",
+    "partnerRef": "RF-2216",
+    "checkIn": "2026-05-19",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0214",
+    "guest": "Priya Martin",
+    "partnerRef": "RF-2217",
+    "checkIn": "2026-09-30",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0215",
+    "guest": "Omar Mendes",
+    "partnerRef": "RF-2218",
+    "checkIn": "2026-04-28",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0216",
+    "guest": "Quinn Costa",
+    "partnerRef": "RF-2219",
+    "checkIn": "2026-07-09",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0217",
+    "guest": "Nadia Costa",
+    "partnerRef": "RF-2220",
+    "checkIn": "2026-08-20",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0218",
+    "guest": "Lena Garcia",
+    "partnerRef": "RF-2221",
+    "checkIn": "2026-09-28",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0219",
+    "guest": "Hana Rossi",
+    "partnerRef": "RF-2222",
+    "checkIn": "2026-10-05",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0220",
+    "guest": "Umar Costa",
+    "partnerRef": "RF-2223",
+    "checkIn": "2026-07-22",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0221",
+    "guest": "Yuki Tanaka",
+    "partnerRef": "RF-2224",
+    "checkIn": "2026-10-16",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0222",
+    "guest": "Tara Garcia",
+    "partnerRef": "RF-2225",
+    "checkIn": "2026-01-07",
+    "nights": 59,
+    "total": 7080,
+    "status": "booked"
+  },
+  {
+    "id": "r_0223",
+    "guest": "Daniel Novak",
+    "partnerRef": "RF-2226",
+    "checkIn": "2026-06-13",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0224",
+    "guest": "Rosa Brown",
+    "partnerRef": "RF-2227",
+    "checkIn": "2026-03-19",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0225",
+    "guest": "George Okafor",
+    "partnerRef": "RF-2228",
+    "checkIn": "2026-09-22",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0226",
+    "guest": "Ana Brown",
+    "partnerRef": "RF-2229",
+    "checkIn": "2026-09-28",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0227",
+    "guest": "Kofi Müller",
+    "partnerRef": "RF-2230",
+    "checkIn": "2026-07-10",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0228",
+    "guest": "Will Costa",
+    "partnerRef": "RF-2232",
+    "checkIn": "2026-10-14",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0229",
+    "guest": "Will Dubois",
+    "partnerRef": "RF-2233",
+    "checkIn": "2026-10-13",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  },
+  {
+    "id": "r_0230",
+    "guest": "Priya Müller",
+    "partnerRef": "RF-2234",
+    "checkIn": "2026-04-24",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0231",
+    "guest": "Umar Novak",
+    "partnerRef": "RF-2235",
+    "checkIn": "2026-09-29",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0232",
+    "guest": "Hana Tanaka",
+    "partnerRef": "RF-2236",
+    "checkIn": "2026-08-04",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0233",
+    "guest": "Umar Rossi",
+    "partnerRef": "RF-2237",
+    "checkIn": "2026-07-13",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0234",
+    "guest": "Quinn Dubois",
+    "partnerRef": "RF-2238",
+    "checkIn": "2026-08-25",
+    "nights": 1,
+    "total": 120,
+    "status": "booked"
+  },
+  {
+    "id": "r_0235",
+    "guest": "Chloe Rossi",
+    "partnerRef": "RF-2239",
+    "checkIn": "2026-03-25",
+    "nights": 4,
+    "total": 480,
+    "status": "booked"
+  },
+  {
+    "id": "r_0236",
+    "guest": "George Garcia",
+    "partnerRef": "RF-2240",
+    "checkIn": "2026-08-13",
+    "nights": 2,
+    "total": 240,
+    "status": "booked"
+  }
+]

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { aliasRandomIds, canonical, hash } from "../src/canonical.ts";
-import type { Adapter, Case, Json } from "../src/contract.ts";
-import { extract, gate, seal, verify } from "../src/engine.ts";
+import type { Adapter, Amounts, Case, Json } from "../src/contract.ts";
+import { extract, gate, impact, seal, verify } from "../src/engine.ts";
 
 const doubler = (company: string, factor = 2, cases: Case[] = []): Adapter => ({
   company,
@@ -74,4 +74,33 @@ test("gate catches a regression and a changed case", async () => {
 
   const changed = await gate(doubler("A", 2, [caseOf("a1", 1, 3)]), contract);
   assert.deepEqual(changed.changedCases.map((c) => c.id), ["a1"]);
+});
+
+const side = (kind: Amounts["kind"], entries: Amounts["entries"], currency = "USD"): Amounts => ({ version: 1, company: kind === "agreed" ? "Site" : "Hotel", kind, currency, entries });
+
+test("impact lists every customer billed differently from what they agreed, and why", () => {
+  const agreed = side("agreed", [
+    { ref: "ok", amount: 120 },
+    { ref: "long", amount: 120 },
+    { ref: "twice", amount: 120 },
+    { ref: "cancelled", amount: 0, note: "cancelled" },
+    { ref: "unbilled", amount: 240 },
+  ]);
+  const billed = side("billed", [
+    { ref: "ok", amount: 120 },
+    { ref: "long", amount: 3720, note: "31 nights" },
+    { ref: "twice", amount: 120 },
+    { ref: "twice", amount: 120 },
+    { ref: "cancelled", amount: 120 },
+  ]);
+  const result = impact([billed, agreed]);
+  assert.deepEqual(result.harmed.map((h) => [h.ref, h.kind]), [["cancelled", "owed-nothing"], ["long", "wrong-amount"], ["twice", "billed-twice"], ["unbilled", "wrong-amount"]]);
+  assert.equal(result.checked, 5);
+  assert.equal(result.overbilled, 3600 + 120 + 120, "billing too little is listed but not counted as owed back");
+});
+
+test("impact refuses mismatched sides", () => {
+  assert.throws(() => impact([side("agreed", []), side("agreed", [])]), /one agreed and one billed/);
+  assert.throws(() => impact([side("agreed", []), side("billed", [], "EUR")]), /USD and Hotel in EUR/);
+  assert.throws(() => impact([side("agreed", [{ ref: "a", amount: 1 }, { ref: "a", amount: 1 }]), side("billed", [])]), /lists booking a twice/);
 });

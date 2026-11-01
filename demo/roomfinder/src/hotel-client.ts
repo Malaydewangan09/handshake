@@ -1,12 +1,13 @@
 import { randomUUID } from "node:crypto";
-import { toHotelDate } from "./dates.ts";
+import { type Site, toHotelDate } from "./dates.ts";
 
 export type Request = { method: string; path: string; headers: Record<string, string>; body: unknown };
 export type Response = { status: number; body: unknown };
 /** fetch in production, a recorder in tests. Rejects on network errors and timeouts. */
 export type Transport = (req: Request) => Promise<Response>;
 
-export type Booking = { ref: string; guest: string; checkIn: string; checkOut: string };
+/** `site` is the RoomFinder site the guest booked on. */
+export type Booking = { ref: string; guest: string; site: Site; checkIn: string; checkOut: string };
 
 export type BookingResult =
   | { kind: "confirmed"; nights: number; total: number }
@@ -32,7 +33,7 @@ export async function bookRoom(send: Transport, b: Booking, apiKey = process.env
         method: "POST",
         path: "/reservations",
         headers: headers(apiKey),
-        body: { guest: b.guest, check_in: toHotelDate(b.checkIn), check_out: toHotelDate(b.checkOut), partner_ref: b.ref },
+        body: { guest: b.guest, check_in: toHotelDate(b.checkIn, b.site), check_out: toHotelDate(b.checkOut, b.site), partner_ref: b.ref },
       });
       return toResult(res);
     } catch (err) {

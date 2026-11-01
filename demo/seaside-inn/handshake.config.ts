@@ -1,7 +1,8 @@
 // Seaside Inn's side of Handshake. Runs the hotel's real booking code. Nothing here leaves the hotel's repo.
+import { readFileSync } from "node:fs";
 import type { Adapter, Case, HttpRequest, Json } from "../../src/contract.ts";
 import { unsupported } from "../../src/contract.ts";
-import { book, cancel, Ledger, type Request } from "./src/reservations.ts";
+import { book, cancel, Ledger, type Request, type Reservation } from "./src/reservations.ts";
 
 const dollars = (n: number) => `$${n.toLocaleString("en-US")}`;
 // HTTP header names are case-insensitive. Our server sees them lowercased.
@@ -57,6 +58,14 @@ const adapter: Adapter = {
       default:
         return unsupported(c.kind);
     }
+  },
+
+  async amounts() {
+    const records: Reservation[] = JSON.parse(readFileSync(new URL("./data/reservations.json", import.meta.url), "utf8"));
+    const entries = records
+      .filter((r) => r.status === "booked")
+      .map((r) => ({ ref: r.partnerRef, amount: r.total, note: `${r.nights} night${r.nights === 1 ? "" : "s"} from ${r.checkIn}` }));
+    return { kind: "billed" as const, currency: "USD", entries };
   },
 
   describe(kind, value) {

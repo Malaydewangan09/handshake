@@ -1,5 +1,7 @@
-// Dates as our site shows them to guests: 03/04/2026 is 3 April.
-export function toHotelDate(iso: string): string {
+export type Site = "us" | "eu";
+
+// Dates as each of our sites shows them to guests: 03/04/2026 is March 4 in the US and 3 April in Europe.
+export function toHotelDate(iso: string, site: Site): string {
   const [year, month, day] = iso.split("-");
-  return `${day}/${month}/${year}`;
+  return site === "eu" ? `${day}/${month}/${year}` : `${month}/${day}/${year}`;
 }

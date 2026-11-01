@@ -1,4 +1,5 @@
 // RoomFinder's side of Handshake. Runs RoomFinder's real booking code. Nothing here leaves RoomFinder's repo.
+import { readFileSync } from "node:fs";
 import type { Adapter, Case, Json } from "../../src/contract.ts";
 import { unsupported } from "../../src/contract.ts";
 import { type Booking, bookRoom, cancelBooking, type Request, type Response, toResult } from "./src/hotel-client.ts";
@@ -16,19 +17,19 @@ async function record(steps: (send: (r: Request) => Promise<Response>) => Promis
   return sent;
 }
 
-const stay = (ref: string, checkIn: string, checkOut: string): Booking => ({ ref, guest: "Ana Silva", checkIn, checkOut });
+const stay = (ref: string, site: Booking["site"], checkIn: string, checkOut: string): Booking => ({ ref, guest: "Ana Silva", site, checkIn, checkOut });
 
 const adapter: Adapter = {
   company: "RoomFinder",
 
   async extract(): Promise<Case[]> {
-    const april = stay("RF-1001", "2026-04-03", "2026-04-04");
-    const may = stay("RF-1002", "2026-05-10", "2026-05-11");
-    const june = stay("RF-1003", "2026-06-01", "2026-06-02");
+    const april = stay("RF-1001", "eu", "2026-04-03", "2026-04-04");
+    const may = stay("RF-1002", "us", "2026-05-10", "2026-05-11");
+    const june = stay("RF-1003", "us", "2026-06-01", "2026-06-02");
     return [
       {
         id: "book-1-night",
-        title: "Guest books 1 night, April 3 to 4",
+        title: "Guest books 1 night on the European site, April 3 to 4",
         kind: "booking",
         input: { requests: (await record((send) => bookRoom(send, april))) as unknown as Json },
         intent: { stays: [{ nights: 1, charge: 120 }] },
@@ -53,6 +54,16 @@ const adapter: Adapter = {
   async apply(c) {
     if (c.kind === "booking-reply") return toResult(c.input as Response) as unknown as Json;
     return unsupported(c.kind);
+  },
+
+  async amounts() {
+    type Row = Booking & { nights: number; price: number; status: "booked" | "cancelled" | "failed" };
+    const records: Row[] = JSON.parse(readFileSync(new URL("./data/bookings.json", import.meta.url), "utf8"));
+    // A failed booking never reached the guest's card, so there is nothing to compare.
+    const entries = records
+      .filter((b) => b.status !== "failed")
+      .map((b) => (b.status === "cancelled" ? { ref: b.ref, amount: 0, note: "cancelled" } : { ref: b.ref, amount: b.price, note: `${b.nights} night${b.nights === 1 ? "" : "s"} from ${b.checkIn}` }));
+    return { kind: "agreed" as const, currency: "USD", entries };
   },
 
   describe(kind, value) {
