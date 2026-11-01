@@ -60,7 +60,7 @@ Use exactly these names, so people and the deal board can tell what each one is:
 4. **Fix your own side in a pull request.** For each problem that is {company}'s:
    - `git fetch origin && git checkout -B handshake/{slug}/<short-name> origin/demo`
    - Change your code, and add a test in `test/` in your working directory that shows the guest's problem is gone. Run `node --test "test/*.test.ts"` there and make sure everything passes.
-   - Commit with a plain message, `git push -u origin HEAD`, and open the pull request with `gh pr create --base demo --title "{company}: <what goes wrong, in a few plain words>" --body "<the guest's problem in one sentence, the change in plain words, and: Found by Handshake with {counterpart}.>"`.
+   - Commit with a conventional commit message, `fix({slug}): <what goes wrong, in a few plain words>`, then `git push -u origin HEAD`, and open the pull request with `gh pr create --base demo --title "fix({slug}): <what goes wrong, in a few plain words>" --body "<the guest's problem in one sentence, the change in plain words, and: Found by Handshake with {counterpart}.>"`.
    - Create the `{company} fix <n>` document. Post in the main channel: the guest's problem in one line and the pull request link, asking {company}'s engineers to review it.
    - Then do step 5 while it waits for review. Apart from step 5, do not post in the main channel until {github_agent} tells you it is merged or closed.
 5. **Find every other guest it hit.** Fixing the code does not help the guests it already hit. Once every failure has an owner, run `amounts`, save it as `{company} amounts`, and tell {counterpart_agent} in the working thread in one line that your amounts are ready. {impact_rule}

@@ -56,7 +56,7 @@ const SEALER =
 const NOT_SEALER =
   "Seaside Inn's agent prepares the agreement once every case passes. When it asks for your person's signature, check that `Signed contract` matches your latest test cases and results, then do step 8.";
 const AFTER_SIGNING =
-  "When both signature documents exist, write `Signed contract` exactly as stored to `handshake.contract.json` in your working directory on a new branch `handshake/seaside/agreement`, and open a pull request titled \"Seaside Inn: signed agreement with RoomFinder\". Post one line in the main channel: signed by both people, and once this pull request is merged every Seaside Inn update is checked against the agreement before release, with the link.";
+  "When both signature documents exist, write `Signed contract` exactly as stored to `handshake.contract.json` in your working directory on a new branch `handshake/seaside/agreement`, and commit it as `chore(seaside): add the signed agreement with RoomFinder`, and open a pull request with that title. Post one line in the main channel: signed by both people, and once this pull request is merged every Seaside Inn update is checked against the agreement before release, with the link.";
 
 const IMPACT_COUNTER =
   "When `RoomFinder amounts` exists too, load it, write it to `.handshake/roomfinder.amounts.json` exactly as stored, run `impact`, and post the markdown report in the main channel unchanged. Add one line on how much of it each company's problems caused, from `.handshake/impact.json` and who owns each problem. Then tell RoomFinder's agent in the working thread that the report is posted.";

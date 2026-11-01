@@ -11,7 +11,7 @@ git worktree add --quiet -B "$BRANCH" "$DIR" origin/demo
 FILE="$DIR/demo/seaside-inn/src/reservations.ts"
 perl -pi -e 's/const \{ guest, check_in, check_out, partner_ref \} =/const { guest, arrival: check_in, departure: check_out, partner_ref } =/' "$FILE"
 grep -q "arrival: check_in" "$FILE" || { echo "bad-release: could not apply the change" >&2; exit 2; }
-git -C "$DIR" commit --quiet -am "Seaside Inn: call the dates arrival and departure"
+git -C "$DIR" commit --quiet -am "refactor(seaside): call the dates arrival and departure"
 git -C "$DIR" push --quiet --force -u origin "$BRANCH"
-gh pr create --base demo --head "$BRANCH" --title "Seaside Inn: call the dates arrival and departure" \
+gh pr create --base demo --head "$BRANCH" --title "refactor(seaside): call the dates arrival and departure" \
   --body "Renames check_in and check_out to arrival and departure in the booking request."
