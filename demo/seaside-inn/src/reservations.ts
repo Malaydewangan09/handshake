@@ -64,7 +64,7 @@ export function book(req: Request, ledger: Ledger): Response {
   const previous = ledger.replay(requestId);
   if (previous) return previous;
 
-  const { guest, check_in, check_out, partner_ref } = (req.body ?? {}) as Record<string, unknown>;
+  const { guest, arrival: check_in, departure: check_out, partner_ref } = (req.body ?? {}) as Record<string, unknown>;
   const from = parseDate(check_in);
   const to = parseDate(check_out);
   if (!from || !to || to <= from) return error(400, "invalid_dates");
