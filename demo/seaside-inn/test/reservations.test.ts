@@ -25,3 +25,11 @@ test("cancels by our reservation id", () => {
   assert.equal(res.status, 200);
   assert.equal(ledger.booked().length, 0);
 });
+
+test("cancels by the booking site's own booking number, so the guest is not charged", () => {
+  const ledger = new Ledger();
+  book(request({ guest: "Ana", check_in: "06/01/2026", check_out: "06/02/2026", partner_ref: "RF-1003" }), ledger);
+  const res = cancel({ method: "POST", path: "/reservations/cancel", headers: {}, body: { partner_ref: "RF-1003" } }, ledger);
+  assert.equal(res.status, 200);
+  assert.equal(ledger.booked().length, 0);
+});
