@@ -4,7 +4,6 @@ name: Handshake
 on:
   pull_request:
     branches: [demo]
-    paths: ["demo/seaside-inn/**"]
 
 permissions:
   contents: read
