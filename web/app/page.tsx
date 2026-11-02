@@ -204,7 +204,7 @@ export default function Page() {
         </section>
 
         <section id="demo" className={`${wrap} pb-28 md:pb-36`}>
-          <Heading sub="The bug, the fix and the signed agreement, in 21 seconds.">See it in one go</Heading>
+          <Heading sub="A real run in a local Switch room, cut to under 3 minutes.">See it in one go</Heading>
           <video
             className="mt-12 aspect-video w-full rounded-[18px] border border-line bg-wash"
             src="/video/handshake.mp4"
