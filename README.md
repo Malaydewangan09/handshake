@@ -2,7 +2,7 @@
 
 When something breaks between two companies' systems, Handshake puts one AI agent from each company in a shared [Switch](https://github.com/sandbox-quantum/switch) room. Each agent checks its own side, they work out whose bug it is, they find every customer it already hit, the owner fixes it in a normal pull request, both sides sign an agreement, and a watcher checks every later release against it. Neither company sees the other's code or customer data.
 
-Built for the Flip the Switch hackathon (Track 1, Best Business Workflow), November 2026. An experiment, not production software.
+Built for the Flip the Switch hackathon (Track 1, Best Business Workflow), November 2026. An experiment, not production software. Site: https://handshake-switch.vercel.app
 
 ## The demo story
 
