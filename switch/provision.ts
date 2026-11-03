@@ -1,7 +1,7 @@
 // Sets up both companies on a local Switch server: users, one controller and one Claude Code agent
 // per company, the shared room, addressing rules and Seaside Inn's watcher. Safe to run again.
 import { execFileSync, spawn } from "node:child_process";
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { existsSync, mkdirSync, openSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
@@ -10,7 +10,10 @@ import { type Company, DEMO_BRANCH, instructions, HOTEL, ROOM_NAME, ROOT, roomIn
 const HERE = join(ROOT, "switch");
 const STATE_DIR = join(HERE, ".state");
 const STATE_FILE = join(STATE_DIR, "state.json");
-const CONTROLLER = join(HERE, ".tools/node_modules/.bin/switch-agent-controller");
+const TOOLS = join(HERE, ".tools");
+const CONTROLLER = join(TOOLS, "node_modules/.bin/switch-agent-controller");
+const CONTROLLER_URL = "https://github.com/sandbox-quantum/switch/releases/download/switch-agent-controller-v0.31.0/switch-agent-controller-0.31.0.tgz";
+const CONTROLLER_SHA256 = "ee62d4331c741cd6e56580b00bab44dc2b67de801d05d444bbbbb03c6dde6e47";
 
 const env = Object.fromEntries(
   readFileSync(join(HERE, ".env"), "utf8")
@@ -76,6 +79,19 @@ async function ensureUser(admin: Gateway, c: Company): Promise<Gateway> {
   }
   save();
   return new Gateway(c.person.name).login(c.person.email, s.password);
+}
+
+async function ensureControllerInstalled() {
+  if (existsSync(CONTROLLER)) return;
+  const res = await fetch(CONTROLLER_URL);
+  if (!res.ok) throw new Error(`download ${CONTROLLER_URL}: ${res.status}`);
+  const tgz = Buffer.from(await res.arrayBuffer());
+  const sha = createHash("sha256").update(tgz).digest("hex");
+  if (sha !== CONTROLLER_SHA256) throw new Error(`controller download has sha256 ${sha}, expected ${CONTROLLER_SHA256}. Not installing it.`);
+  mkdirSync(TOOLS, { recursive: true });
+  writeFileSync(join(TOOLS, "controller.tgz"), tgz);
+  execFileSync("npm", ["install", "--prefix", TOOLS, "--ignore-scripts", "--no-audit", "--no-fund", "./controller.tgz"], { cwd: TOOLS, stdio: "inherit" });
+  log("installed switch-agent-controller 0.31.0");
 }
 
 async function ensureController(g: Gateway, c: Company): Promise<string> {
@@ -290,6 +306,7 @@ async function ensureGithubAgent(g: Gateway, c: Company, roomId: string) {
 async function main() {
   const { values } = parseArgs({ options: { "new-room": { type: "boolean" } } });
   if (values["new-room"]) delete state.roomId;
+  await ensureControllerInstalled();
   const admin = await new Gateway("admin").login(env.GATEWAY_ADMIN_EMAIL, env.GATEWAY_ADMIN_PASSWORD);
   const pay = await ensureUser(admin, HOTEL);
   const store = await ensureUser(admin, SITE);
