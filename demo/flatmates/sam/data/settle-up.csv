@@ -1,0 +1,29 @@
+month,number,bill,total,priya_share
+May,RENT-0526,Rent,46000,21160
+May,BESCOM-0526,Electricity,2840,1420
+May,ACT-0526,Internet,1180,590
+May,MAID-0526,Maid,6000,3000
+June,RENT-0626,Rent,46000,21160
+June,BESCOM-0626,Electricity,3260,1630
+June,ACT-0626,Internet,1180,590
+June,GAS-0626,Cooking gas,1100,550
+June,MAID-0626,Maid,6000,3000
+July,RENT-0726,Rent,48000,23160
+July,BESCOM-0726,Electricity,3480,1740
+July,ACT-0726,Internet,1180,590
+July,MAID-0726,Maid,6000,3000
+August,RENT-0826,Rent,48000,23160
+August,BESCOM-0826,Electricity,3120,1560
+August,ACT-0826,Internet,1180,590
+August,ACT-0826,Internet,1180,590
+August,GAS-0826,Cooking gas,1100,550
+August,MAID-0826,Maid,6000,3000
+September,RENT-0926,Rent,48000,23160
+September,BESCOM-0926,Electricity,2760,1380
+September,ACT-0926,Internet,1180,590
+September,MAID-0926,Maid,6000,3000
+October,RENT-1026,Rent,48000,23160
+October,BESCOM-1026,Electricity,2420,1210
+October,ACT-1026,Internet,1180,590
+October,GAS-1026,Cooking gas,1100,550
+October,MAID-1026,Maid,6000,3000

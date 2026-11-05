@@ -1,0 +1,28 @@
+number,bill,month,total
+RENT-0526,Rent,May,46000
+BESCOM-0526,Electricity,May,2840
+ACT-0526,Internet,May,1180
+MAID-0526,Maid,May,6000
+RENT-0626,Rent,June,46000
+BESCOM-0626,Electricity,June,3260
+ACT-0626,Internet,June,1180
+GAS-0626,Cooking gas,June,1100
+MAID-0626,Maid,June,6000
+RENT-0726,Rent,July,48000
+BESCOM-0726,Electricity,July,3480
+ACT-0726,Internet,July,1180
+MAID-0726,Maid,July,6000
+RENT-0826,Rent,August,48000
+BESCOM-0826,Electricity,August,3120
+ACT-0826,Internet,August,1180
+GAS-0826,Cooking gas,August,1100
+MAID-0826,Maid,August,6000
+RENT-0926,Rent,September,48000
+BESCOM-0926,Electricity,September,2760
+ACT-0926,Internet,September,1180
+MAID-0926,Maid,September,6000
+RENT-1026,Rent,October,48000
+BESCOM-1026,Electricity,October,2420
+ACT-1026,Internet,October,1180
+GAS-1026,Cooking gas,October,1100
+MAID-1026,Maid,October,6000

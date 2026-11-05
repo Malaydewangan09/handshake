@@ -26,3 +26,8 @@ echo; echo "== Who else did it hit? Both companies' records, by booking number a
 $H amounts demo/roomfinder/handshake.config.ts -o "$OUT/roomfinder.amounts.json"
 $H amounts demo/seaside-inn/handshake.config.ts -o "$OUT/seaside.amounts.json"
 $H impact "$OUT/roomfinder.amounts.json" "$OUT/seaside.amounts.json" -o "$OUT/impact.json" --md
+
+echo; echo "== The same check between two flatmates: Priya's share of each bill, and what Sam's sheet charges her"
+$H amounts demo/flatmates/priya/handshake.config.ts -o "$OUT/priya.amounts.json"
+$H amounts demo/flatmates/sam/handshake.config.ts -o "$OUT/sam.amounts.json"
+$H impact "$OUT/priya.amounts.json" "$OUT/sam.amounts.json" -o "$OUT/flatmates.impact.json" --md
