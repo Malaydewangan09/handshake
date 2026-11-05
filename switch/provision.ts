@@ -5,7 +5,22 @@ import { createHash, randomBytes } from "node:crypto";
 import { existsSync, mkdirSync, openSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
-import { type Company, DEMO_BRANCH, instructions, HOTEL, ROOM_NAME, ROOT, roomInstructions, SITE, WATCHER } from "./companies.ts";
+import {
+  type Company,
+  DEMO_BRANCH,
+  FLATMATES_ROOM,
+  flatmateInstructions,
+  flatmatesRoomInstructions,
+  HOTEL,
+  instructions,
+  PRIYA,
+  ROOM_NAME,
+  ROOT,
+  roomInstructions,
+  SAM,
+  SITE,
+  WATCHER,
+} from "./companies.ts";
 
 const HERE = join(ROOT, "switch");
 const STATE_DIR = join(HERE, ".state");
@@ -23,11 +38,50 @@ const env = Object.fromEntries(
 );
 const API = `http://localhost:${env.API_HOST_PORT ?? 8000}`;
 
+type Pair = {
+  /** a hosts the room. */
+  a: Company;
+  b: Company;
+  room: string;
+  description: string;
+  roomInstructions: () => string;
+  instructions: (c: Company, other: Company) => string;
+  /** The git ref each agent's worktree starts from. */
+  ref: string;
+  /** Pull requests, GitHub notices and the release watcher. Only the companies have code to change. */
+  hasCode: boolean;
+};
+
+const PAIRS: Record<string, Pair> = {
+  companies: {
+    a: HOTEL,
+    b: SITE,
+    room: ROOM_NAME,
+    description: "Seaside Inn and RoomFinder check their integration against each other's real code.",
+    roomInstructions,
+    instructions,
+    ref: DEMO_BRANCH,
+    hasCode: true,
+  },
+  flatmates: {
+    a: PRIYA,
+    b: SAM,
+    room: FLATMATES_ROOM,
+    description: "Priya and Sam check Sam's bills sheet against what Priya owes.",
+    roomInstructions: flatmatesRoomInstructions,
+    instructions: flatmateInstructions,
+    ref: "main",
+    hasCode: false,
+  },
+};
+
 type CompanyState = { password: string; controllerId?: string; agentId?: string };
 type ChatUser = { id: string; username: string; password: string };
 type State = {
   companies: Record<string, CompanyState>;
   roomId?: string;
+  /** Rooms of pairs other than the companies, by room name. */
+  rooms?: Record<string, string>;
   watcher?: { id: string; apiKey: string };
   github?: Record<string, { id: string; apiKey: string }>;
   chat?: { bridgeId: string; teamId: string; users: Record<string, ChatUser> };
@@ -132,9 +186,9 @@ function startController(c: Company, dataDir: string) {
   log(`started ${c.slug} controller (pid ${child.pid}, log .state/${c.slug}-controller.log)`);
 }
 
-async function ensureAgent(g: Gateway, c: Company, other: Company): Promise<string> {
+async function ensureAgent(g: Gateway, pair: Pair, c: Company, other: Company): Promise<string> {
   const s = state.companies[c.slug];
-  const definition = { provider: "claude", instructions: instructions(c, other), directory: c.workdir, auto_mode: true };
+  const definition = { provider: "claude", instructions: pair.instructions(c, other), directory: c.workdir, auto_mode: true };
   const existing = list<{ agent_id: string; name: string }>(await g.call("GET", "/management/agents"), "agents").find((a) => a.name === c.agent);
   if (existing) {
     await g.call("PUT", `/management/agents/${existing.agent_id}`, { controller_id: s.controllerId, desired_state: "running", definition });
@@ -165,28 +219,35 @@ async function ensureAgent(g: Gateway, c: Company, other: Company): Promise<stri
   return s.agentId!;
 }
 
-async function ensureRoom(admin: Gateway, host: Gateway): Promise<string> {
-  const payId = state.companies.seaside.agentId!;
-  const storeId = state.companies.roomfinder.agentId!;
-  if (!state.roomId) {
+const roomIdOf = (pair: Pair) => (pair.hasCode ? state.roomId : state.rooms?.[pair.room]);
+
+function setRoomId(pair: Pair, id: string | undefined) {
+  if (pair.hasCode) state.roomId = id;
+  else if (id) (state.rooms ??= {})[pair.room] = id;
+  else delete state.rooms?.[pair.room];
+}
+
+async function ensureRoom(pair: Pair, host: Gateway): Promise<string> {
+  const hostAgent = state.companies[pair.a.slug].agentId!;
+  const guestAgent = state.companies[pair.b.slug].agentId!;
+  if (!roomIdOf(pair)) {
     // A private Mattermost channel with both people in it. Switch creates the channel.
     const room = await host.call<{ id?: string; room_id?: string }>("POST", "/rooms", {
-      name: `${ROOM_NAME}-${Date.now().toString(36)}`,
-      description: "Seaside Inn and RoomFinder check their integration against each other's real code.",
-      instructions: roomInstructions(),
+      name: `${pair.room}-${Date.now().toString(36)}`,
+      description: pair.description,
+      instructions: pair.roomInstructions(),
       bridge_id: state.chat!.bridgeId,
       channel_type: "channel_private",
-      agent_ids: [payId],
-      user_names: [HOTEL, SITE].map(chatUsername),
+      agent_ids: [hostAgent],
+      user_names: [pair.a, pair.b].map(chatUsername),
     });
-    state.roomId = room.id ?? room.room_id;
+    setRoomId(pair, room.id ?? room.room_id);
     save();
     log("created room and its private Mattermost channel");
   }
-  // Seaside Inn hosts the room and brings RoomFinder's agent in. Adding an agent that is already there is a no-op.
-  await host.call("POST", `/rooms/${state.roomId}/agents`, { agent_ids: [payId, storeId] }, [409]);
-  void admin;
-  return state.roomId!;
+  // The host brings the other side's agent in. Adding an agent that is already there is a no-op.
+  await host.call("POST", `/rooms/${roomIdOf(pair)}/agents`, { agent_ids: [hostAgent, guestAgent] }, [409]);
+  return roomIdOf(pair)!;
 }
 
 const MM = `http://localhost:${env.MATTERMOST_HOST_PORT ?? 8065}`;
@@ -244,7 +305,7 @@ async function ensureChatAccounts(admin: Gateway, people: Map<Company, Gateway>)
       }
     }
   }
-  log("linked @maria and @arjun to their Switch users");
+  log(`linked ${[...people.keys()].map((c) => `@${chatUsername(c)}`).join(" and ")} to their Switch users`);
 }
 
 /** Owner and owner's agents everywhere, plus the other company's agent in this room only. Not its people. */
@@ -274,17 +335,17 @@ async function ensureWatcher(host: Gateway, roomId: string) {
 }
 
 /** The agent's own checkout of the demo branch, holding only its company's folder and the shared CLI. */
-function ensureWorktree(c: Company) {
+function ensureWorktree(c: Company, ref: string) {
   const dir = join(ROOT, ".worktrees", c.slug);
   const git = (...args: string[]) => execFileSync("git", args, { cwd: ROOT, stdio: ["ignore", "pipe", "inherit"] });
-  git("fetch", "--quiet", "origin", DEMO_BRANCH);
+  git("fetch", "--quiet", "origin", ref);
   if (!existsSync(dir)) {
-    git("worktree", "add", "--quiet", "--no-checkout", "--detach", dir, `origin/${DEMO_BRANCH}`);
+    git("worktree", "add", "--quiet", "--no-checkout", "--detach", dir, `origin/${ref}`);
     log(`created ${c.name}'s worktree`);
   }
-  // Cone mode keeps top-level files plus these folders. The other company's folder is never written to disk.
+  // Cone mode keeps top-level files plus these folders. The other side's folder is never written to disk.
   execFileSync("git", ["sparse-checkout", "set", "src", c.repo.slice(ROOT.length + 1)], { cwd: dir });
-  execFileSync("git", ["checkout", "--quiet", "--detach", `origin/${DEMO_BRANCH}`], { cwd: dir });
+  execFileSync("git", ["checkout", "--quiet", "--detach", `origin/${ref}`], { cwd: dir });
 }
 
 /** Posts this company's pull request events. Owned by the company, so its own agent takes them as instructions. */
@@ -292,7 +353,7 @@ async function ensureGithubAgent(g: Gateway, c: Company, roomId: string) {
   state.github ??= {};
   if (!state.github[c.slug]) {
     const res = await g.call<{ id?: string; agent_id?: string; api_key: string }>("POST", "/agents/register-other", {
-      name: c.github,
+      name: c.github!,
       description: `Posts ${c.name}'s pull request events from GitHub into the Handshake room.`,
       overwrite: true,
     });
@@ -304,32 +365,37 @@ async function ensureGithubAgent(g: Gateway, c: Company, roomId: string) {
 }
 
 async function main() {
-  const { values } = parseArgs({ options: { "new-room": { type: "boolean" } } });
-  if (values["new-room"]) delete state.roomId;
+  const { values } = parseArgs({ options: { "new-room": { type: "boolean" }, pair: { type: "string", default: "companies" } } });
+  const pair = PAIRS[values.pair!];
+  if (!pair) throw new Error(`unknown pair ${values.pair}, use ${Object.keys(PAIRS).join(" or ")}`);
+  if (values["new-room"]) setRoomId(pair, undefined);
   await ensureControllerInstalled();
   const admin = await new Gateway("admin").login(env.GATEWAY_ADMIN_EMAIL, env.GATEWAY_ADMIN_PASSWORD);
-  const pay = await ensureUser(admin, HOTEL);
-  const store = await ensureUser(admin, SITE);
+  const { a, b } = pair;
+  const ga = await ensureUser(admin, a);
+  const gb = await ensureUser(admin, b);
 
-  ensureWorktree(HOTEL);
-  ensureWorktree(SITE);
-  await ensureController(pay, HOTEL);
-  await ensureController(store, SITE);
-  const payAgent = await ensureAgent(pay, HOTEL, SITE);
-  const storeAgent = await ensureAgent(store, SITE, HOTEL);
+  ensureWorktree(a, pair.ref);
+  ensureWorktree(b, pair.ref);
+  await ensureController(ga, a);
+  await ensureController(gb, b);
+  const agentA = await ensureAgent(ga, pair, a, b);
+  const agentB = await ensureAgent(gb, pair, b, a);
 
-  await ensureChatAccounts(admin, new Map([[HOTEL, pay], [SITE, store]]));
-  const roomId = await ensureRoom(admin, pay);
-  await allowCounterpart(pay, payAgent, storeAgent, roomId);
-  await allowCounterpart(store, storeAgent, payAgent, roomId);
-  log("addressing: each agent answers its own company, plus the other company's agent in this room");
-  await ensureWatcher(pay, roomId);
-  await ensureGithubAgent(pay, HOTEL, roomId);
-  await ensureGithubAgent(store, SITE, roomId);
+  await ensureChatAccounts(admin, new Map([[a, ga], [b, gb]]));
+  const roomId = await ensureRoom(pair, ga);
+  await allowCounterpart(ga, agentA, agentB, roomId);
+  await allowCounterpart(gb, agentB, agentA, roomId);
+  log("addressing: each agent answers its own side, plus the other side's agent in this room");
+  if (pair.hasCode) {
+    await ensureWatcher(ga, roomId);
+    await ensureGithubAgent(ga, a, roomId);
+    await ensureGithubAgent(gb, b, roomId);
+  }
 
-  console.log(`\nReady. Room ${ROOM_NAME} (${roomId}).`);
+  console.log(`\nReady. Room ${pair.room} (${roomId}).`);
   console.log(`Chat: ${MM}  (log in as one person per browser window)`);
-  for (const c of [HOTEL, SITE]) {
+  for (const c of [a, b]) {
     const u = state.chat!.users[c.slug];
     console.log(`  ${c.person.name} (${c.name}): ${u.username} / ${u.password}`);
   }

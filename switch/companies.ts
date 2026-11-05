@@ -9,14 +9,14 @@ export type Company = {
   slug: string;
   name: string;
   agent: string;
-  /** Custom agent that posts this company's pull request events into the room. */
-  github: string;
+  /** Custom agent that posts this company's pull request events into the room. Flatmates have none. */
+  github?: string;
   person: { name: string; email: string };
   /** The company's folder in this checkout. */
   repo: string;
   /** Its folder in the agent's own sparse worktree, where the other company's code is absent. */
   workdir: string;
-  /** Its own booking records, relative to its folder. */
+  /** Its own records, relative to its folder. */
   records: string;
 };
 
@@ -76,7 +76,7 @@ export function instructions(c: Company, other: Company): string {
     counterpart: other.name,
     counterpart_agent: other.agent,
     counterpart_slug: other.slug,
-    github_agent: c.github,
+    github_agent: c.github ?? "",
     records: c.records,
     impact_rule: c === HOTEL ? IMPACT_COUNTER : IMPACT_CHECKER,
     impact_question: c === HOTEL ? REFUND_QUESTION : APOLOGY_QUESTION,
@@ -87,3 +87,59 @@ export function instructions(c: Company, other: Company): string {
 }
 
 export const roomInstructions = (): string => readFileSync(join(here, "instructions/room.md"), "utf8");
+
+export const PRIYA: Company = {
+  slug: "priya",
+  name: "Priya",
+  agent: "priya-agent",
+  person: { name: "Priya Nair", email: "priya@flat4b.test" },
+  repo: join(ROOT, "demo/flatmates/priya"),
+  workdir: join(ROOT, ".worktrees", "priya", "demo/flatmates/priya"),
+  records: "the bills Sam posted in their flat group `data/bills.csv`, the shares she paid straight to someone `data/paid-myself.csv`, and her notes `data/notes.md`",
+};
+
+export const SAM: Company = {
+  slug: "sam",
+  name: "Sam",
+  agent: "sam-agent",
+  person: { name: "Sam Fernandes", email: "sam@flat4b.test" },
+  repo: join(ROOT, "demo/flatmates/sam"),
+  workdir: join(ROOT, ".worktrees", "sam", "demo/flatmates/sam"),
+  records: "his settle-up sheet `data/settle-up.csv` and his notes `data/notes.md`",
+};
+
+export const FLATMATES_ROOM = "flat-4b";
+
+const FLATMATE_RULES: Record<string, Record<string, string>> = {
+  priya: {
+    impact_rule:
+      "When `Sam amounts` exists too, load it, write it to `.handshake/sam.amounts.json` exactly as stored, run `impact`, and post the report in the main channel unchanged. Then tell Sam's agent in the working thread that it is posted.",
+    settle_rule:
+      "When Sam's agent says the sheet is fixed, create the `Settlement` document: the total taken off the sheet, one plain line per bill, and the line from the flat agreement that settles it for next time. Post one line in the main channel that the settlement is ready to sign, ask Priya to sign (step 5), and ask Sam's agent in the working thread to get Sam's agreement.",
+    after_signing_rule: "When both signature documents exist, post one line in the main channel: settled up to October, agreed by both, and the total.",
+  },
+  sam: {
+    impact_rule:
+      "Priya's agent compares both and posts the result. When it has, load `Priya amounts`, write it to `.handshake/priya.amounts.json` exactly as stored, run `impact` yourself, and say in one line in the working thread whether you get the same bills and total.",
+    settle_rule:
+      "Once every bill has an owner, for the mistakes in Sam's sheet ask Sam with `AskUserQuestion`: header `Sheet`, question \"Take <total> off what Priya owes, for the <n> bills the sheet charged wrong?\", options `Fix sheet` and `Not yet`. On Fix sheet, write `.handshake/corrections.csv`: one row per bill with the bill number, the month, what the sheet charged and what it should be. Post one line in the main channel: the sheet is fixed, and by how much. Then tell Priya's agent in the working thread. On \"Not yet\", say in one line that the sheet is unchanged.",
+    after_signing_rule: "",
+  },
+};
+
+export function flatmateInstructions(c: Company, other: Company): string {
+  const template = readFileSync(join(here, "instructions/flatmate.md"), "utf8");
+  const values: Record<string, string> = {
+    agent: c.agent,
+    person: c.name,
+    slug: c.slug,
+    counterpart: other.name,
+    counterpart_agent: other.agent,
+    counterpart_slug: other.slug,
+    records: c.records,
+    ...FLATMATE_RULES[c.slug],
+  };
+  return template.replace(/\{(\w+)\}/g, (m, k: string) => values[k] ?? m);
+}
+
+export const flatmatesRoomInstructions = (): string => readFileSync(join(here, "instructions/flatmates-room.md"), "utf8");
