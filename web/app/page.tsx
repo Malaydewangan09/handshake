@@ -21,11 +21,17 @@ const ELSEWHERE = [
   ["A 9:00 flight shown as 21:00", "Travel site and airline"],
 ];
 
+const FLAT_SHEET = [
+  ["Rent, a month, July to October", "₹23,160", "₹22,080", "The whole ₹2,000 rise was on Priya. Their agreement splits any rise 46/54."],
+  ["Internet, August", "₹590 × 2", "₹590", "The same bill, pasted in twice."],
+  ["Maid, October", "₹3,000", "₹0", "Priya had paid her half to the maid herself."],
+];
+
 const FAQ = [
   ["Who uses it?", "An engineer at each company sets it up once. After that, anyone can start a check and read the results. Fixes arrive as pull requests, and that company's engineers review and merge them as usual."],
   ["Isn't this just Pact?", "Pact needs both companies to adopt it up front, write contract tests and share a broker, which rarely happens across company lines. Handshake starts from a bug report, builds the test cases from each side's own code, works out whose bug it is, and writes the agreement at the end."],
   ["What happens after the first check?", "The watcher keeps going. Before every release, it runs the signed bookings against the new version and holds the release if any would break. The first check happens once per partner. The watcher runs on every release after that."],
-  ["Does it only work for hotels?", "No. It works for any two systems that send data to each other, such as an app and its payment provider, a store and a courier, or two teams inside one company. Both sides can be engineering teams. The hotel just makes the easiest story to follow."],
+  ["Does it only work for hotels?", "No. It works for any two systems that send data to each other, such as an app and its payment provider, a store and a courier, or two teams inside one company. It even works for two flatmates settling a bills sheet, where there is no code at all, only records. The hotel just makes the easiest story to follow."],
   ["Does either company see the other's code?", "No. Each agent reads only its own company's code, on its own machine. Only test bookings, results and short notes are shared."],
   ["How does it find the other guests without sharing customer data?", "Each agent reads its own company's records and shares only booking numbers and amounts, which both companies already know. Names, emails and cards stay where they are. Both sides run the comparison and must get the same list."],
   ["Does the agent change our code by itself?", "No. It opens a pull request in your own repo with the fix and a test. Your engineers review it, then merge it or close it."],
@@ -203,7 +209,43 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="demo" className={`${wrap} pb-28 md:pb-36`}>
+        <section id="flatmates" className="bg-wash py-28 md:py-36">
+          <div className={`${wrap} grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20`}>
+            <div>
+              <Heading sub="Priya and Sam share a flat. Sam pays the bills and keeps a sheet of her share. It said she owed him ₹7,910 more than she thought.">
+                Or two flatmates
+              </Heading>
+              <p className="mt-6 max-w-[42rem] text-[18px] leading-relaxed text-soft">
+                Same room, one agent each. Each reads only its own person&apos;s records and they compare bill numbers and amounts, never bank
+                statements. They argued, Sam&apos;s agent conceded, Sam fixed his sheet with one button and both signed.
+              </p>
+            </div>
+            {/* Sam's sheet, corrected by hand: the three lines the agents found. */}
+            <div className="-rotate-[0.6deg] self-start rounded-[4px] bg-white px-6 py-7 shadow-[0_18px_40px_-24px_rgba(11,14,20,0.35)] md:px-9">
+              <div className="flex items-baseline justify-between border-b border-line pb-3">
+                <span className="font-display text-[18px] font-medium">Sam&apos;s sheet, May to October</span>
+                <span className="shrink-0 text-[13px] text-grey">Priya&apos;s share</span>
+              </div>
+              <ul className="divide-y divide-dashed divide-line text-[15.5px]">
+                {FLAT_SHEET.map(([bill, was, now, why]) => (
+                  <li key={bill} className="grid grid-cols-[1fr_auto] gap-x-4 py-3.5">
+                    <span>{bill}</span>
+                    <span className="text-right">
+                      <s className="text-grey decoration-sea/70 decoration-2">{was}</s> <span className="font-medium text-sea">{now}</span>
+                    </span>
+                    <span className="col-span-2 text-[13.5px] text-soft">{why}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-baseline justify-between border-t-2 border-ink pt-3">
+                <span className="font-medium">Taken off the sheet</span>
+                <span className="font-display text-[1.6rem] font-medium tracking-[-0.02em] text-sea">₹7,910</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="demo" className={`${wrap} py-28 md:py-36`}>
           <Heading sub="A real run in a local Switch room, cut to under 3 minutes.">See it in one go</Heading>
           <video
             className="mt-12 aspect-video w-full rounded-[18px] border border-line bg-wash"
@@ -249,7 +291,7 @@ export default function Page() {
       <footer className="border-t border-line">
         <div className={`${wrap} flex flex-col gap-2 py-8 text-[13px] text-grey md:flex-row md:justify-between`}>
           <span>Built for Flip the Switch, November 2026.</span>
-          <span>Seaside Inn and RoomFinder are made up. The kinds of bugs are real.</span>
+          <span>Seaside Inn, RoomFinder, Priya and Sam are made up. The kinds of bugs are real.</span>
         </div>
       </footer>
     </>
