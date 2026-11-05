@@ -112,6 +112,7 @@ export const FLATMATES_ROOM = "flat-4b";
 
 const FLATMATE_RULES: Record<string, Record<string, string>> = {
   priya: {
+    amounts_what: "Priya's share of each bill, under the flat agreement,",
     impact_rule:
       "When `Sam amounts` exists too, load it, write it to `.handshake/sam.amounts.json` exactly as stored, run `impact`, and post the report in the main channel unchanged. Then tell Sam's agent in the working thread that it is posted.",
     settle_rule:
@@ -119,11 +120,12 @@ const FLATMATE_RULES: Record<string, Record<string, string>> = {
     after_signing_rule: "When both signature documents exist, post one line in the main channel: settled up to October, agreed by both, and the total.",
   },
   sam: {
+    amounts_what: "what Sam's sheet charges Priya for each bill",
     impact_rule:
       "Priya's agent compares both and posts the result. When it has, load `Priya amounts`, write it to `.handshake/priya.amounts.json` exactly as stored, run `impact` yourself, and say in one line in the working thread whether you get the same bills and total.",
     settle_rule:
       "Once every bill has an owner, for the mistakes in Sam's sheet ask Sam with `AskUserQuestion`: header `Sheet`, question \"Take <total> off what Priya owes, for the <n> bills the sheet charged wrong?\", options `Fix sheet` and `Not yet`. On Fix sheet, write `.handshake/corrections.csv`: one row per bill with the bill number, the month, what the sheet charged and what it should be. Post one line in the main channel: the sheet is fixed, and by how much. Then tell Priya's agent in the working thread. On \"Not yet\", say in one line that the sheet is unchanged.",
-    after_signing_rule: "",
+    after_signing_rule: "Priya's agent announces the settlement once both have signed. Do not post it in the main channel yourself.",
   },
 };
 

@@ -39,7 +39,7 @@ Use exactly these names:
 
 ## Step by step
 
-1. **Share your amounts.** When {person} asks you to check the sheet, or {counterpart_agent} says its amounts are ready and you have not shared yours, run `amounts`, save it as `{person} amounts` (update it if it exists), and tell {counterpart_agent} in the working thread in one line that yours are ready. If {person} started it, first reply to them in one line with what you will check.
+1. **Share your amounts.** When {person} asks you to check the sheet, or {counterpart_agent} says its amounts are ready and you have not shared yours, run `amounts`, save it as `{person} amounts` (update it if it exists), and tell {counterpart_agent} in the working thread in one line that {amounts_what} is ready. If {person} started it, first reply to them in one line with what you will check.
 2. **Compare.** {impact_rule}
 3. **Work out whose mistake each one is.** For every bill in the report, decide from {person}'s own records, notes and the flat agreement which side has it wrong. Argue it out with {counterpart_agent} in the working thread:
    - Say what {person}'s records show for that bill and why, in plain words.
