@@ -2,7 +2,9 @@
 
 When something breaks between two companies' systems, Handshake puts one AI agent from each company in a shared [Switch](https://github.com/sandbox-quantum/switch) room. Each agent checks its own side, they work out whose bug it is, they find every customer it already hit, the owner fixes it in a normal pull request, both sides sign an agreement, and a watcher checks every later release against it. Neither company sees the other's code or customer data.
 
-Built for the Flip the Switch hackathon (Track 1, Best Business Workflow), November 2026. An experiment, not production software. Site: https://handshake-switch.vercel.app
+The same check works between two people. In the second demo, two flatmates' agents settle a bills sheet.
+
+Built for the Flip the Switch hackathon (Track 1, Best Business Workflow, and Track 2, Best Personal or Creative Workflow), November 2026. An experiment, not production software. Site: https://handshake-switch.vercel.app
 
 ## The demo story
 
@@ -13,6 +15,16 @@ Seaside Inn is a small hotel. RoomFinder is the website that sells its rooms. Bo
 - RoomFinder cancels with its own booking number. Seaside Inn ignores it, and the guest is still charged.
 
 Both companies have eight months of booking records in `demo/*/data/`, made by running their real code against each other (`scripts/seed-records.ts`). 26 of 227 bookings were billed wrong, $61,680 in all.
+
+## The flatmates
+
+Priya and Sam share a flat in Bengaluru. Sam pays the bills and keeps a sheet of Priya's share, and it says she owes ₹7,910 more than she thinks. Each has an agent that reads only their own records in `demo/flatmates/`: Priya's list of bills and the shares she paid herself, Sam's sheet. They share bill numbers and amounts, nothing else.
+
+- The rent went up ₹2,000 in July and Sam's sheet put all of it on Priya. Their agreement says any rise splits 46/54.
+- The August internet bill is on the sheet twice.
+- Priya paid her half of October's maid herself, and the sheet still charges her for it.
+
+The agents argue out whose mistake each one is from the agreement and their own notes, Sam fixes his sheet with a button only he can press, and both sign the settlement. There is no code to test here, so the flatmates use only `amounts` and `impact`.
 
 ## How it works
 
@@ -37,9 +49,10 @@ Both companies have eight months of booking records in `demo/*/data/`, made by r
 
 ```
 src/          the Handshake CLI: extract, verify, seal, gate, amounts, impact (zero dependencies, Node 24)
-demo/         the two made-up companies
+demo/         the two made-up companies, and the two flatmates
   seaside-inn/  the hotel's booking system
   roomfinder/   the booking site's hotel client
+  flatmates/    Priya's and Sam's records
 switch/       local Switch server, provisioning, agent instructions, watcher, github-sync
 web/          landing page (Next.js)
 ```
@@ -60,6 +73,8 @@ node switch/github-sync.ts                 # keep running: pull request events i
 ```
 
 Open http://localhost:8065, log in as `maria.lopez` and as `arjun.mehta` in two browser windows, and post as Maria: `@seaside-inn-agent A guest emailed us: she booked 1 night on RoomFinder for 3 April, and we billed her $3,720. Can you find out what happened, with RoomFinder?`
+
+For the flatmates, run `node switch/provision.ts --pair flatmates`, log in as `priya.nair` and `sam.fernandes`, and post as Priya: `@priya-agent Sam's sheet says I owe him ₹7,910 more than I've paid for May to October. I don't think I do. Can you check it with Sam's agent?`
 
 - `scripts/bad-release.sh` opens a Seaside Inn pull request that breaks the agreement.
 - `scripts/reset-demo.sh` closes the demo pull requests, rewinds the `demo` branch and opens a fresh room. Restart `github-sync` after it.
