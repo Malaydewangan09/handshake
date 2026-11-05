@@ -45,11 +45,20 @@ const HARM: Record<HarmKind, string> = {
 
 export function impactReport(i: Impact): string {
   const money = (n: number) => n.toLocaleString("en-US", { style: "currency", currency: i.currency, maximumFractionDigits: 0 });
-  if (i.harmed.length === 0) return `✅ **All ${i.checked} ${i.agreedBy} bookings were billed right by ${i.billedBy}.**`;
-  const head = `**${i.harmed.length} of ${i.checked} ${i.agreedBy} bookings were billed wrong by ${i.billedBy}: ${money(i.overbilled)} too much.**`;
-  const lines = (Object.keys(HARM) as HarmKind[]).flatMap((k) => {
+  const w = i.wording;
+  const items = w ? w.items : `${i.agreedBy} bookings`;
+  const verb = w?.verb ?? "billed";
+  const harm: Record<HarmKind, string> = w
+    ? { "wrong-amount": `${verb} the wrong amount`, "billed-twice": `${verb} twice`, "owed-nothing": `${verb} though nothing was owed` }
+    : HARM;
+  if (i.harmed.length === 0) return `✅ **All ${i.checked} ${items} were ${verb} right by ${i.billedBy}.**`;
+  const head = `**${i.harmed.length} of ${i.checked} ${items} were ${verb} wrong by ${i.billedBy}: ${money(i.overbilled)} too much.**`;
+  const lines = (Object.keys(harm) as HarmKind[]).flatMap((k) => {
     const group = i.harmed.filter((h) => h.kind === k);
-    return group.length ? [`- ${group.length} ${HARM[k]}: ${money(group.reduce((s, h) => s + Math.max(0, h.billed - h.agreed), 0))}`] : [];
+    return group.length ? [`- ${group.length} ${harm[k]}: ${money(group.reduce((s, h) => s + Math.max(0, h.billed - h.agreed), 0))}`] : [];
   });
-  return [head, "", ...lines, "", "Compared by booking number and amount only. No names, emails or card details left either company."].join("\n");
+  const footer = w
+    ? `Compared by ${w.ref} and amount only. Nothing else left either side.`
+    : "Compared by booking number and amount only. No names, emails or card details left either company.";
+  return [head, "", ...lines, "", footer].join("\n");
 }

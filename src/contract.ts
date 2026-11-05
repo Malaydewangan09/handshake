@@ -60,6 +60,9 @@ export type SealedContract = {
 /** One booking or order, by the number both companies already know it by. No names, emails or card details. */
 export type AmountEntry = { ref: string; amount: number; note?: string };
 
+/** How a report names what was compared, e.g. "shared bills", "bill number", "charged". Bookings when absent. */
+export type Wording = { items: string; ref: string; verb: string };
+
 /** What one company's records say each customer owes ("agreed") or was billed ("billed"). */
 export type Amounts = {
   version: 1;
@@ -68,6 +71,7 @@ export type Amounts = {
   /** ISO 4217 code, e.g. "USD". */
   currency: string;
   entries: AmountEntry[];
+  wording?: Wording;
 };
 
 export type HarmKind = "wrong-amount" | "billed-twice" | "owed-nothing";
@@ -91,6 +95,7 @@ export type Impact = {
   harmed: Harm[];
   /** Billed minus agreed, summed over customers billed too much. */
   overbilled: number;
+  wording?: Wording;
 };
 
 /** Written by each company, next to its own code. */
