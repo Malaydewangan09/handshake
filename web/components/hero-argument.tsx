@@ -2,104 +2,67 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
+import { Check, Hash } from "@phosphor-icons/react";
 
-// The same argument, said by two companies and by two flatmates. In both real runs the right-hand side owned the mistake.
-// Behind it sit each side's own records, with the wrong line circled in pen.
-type Slip = { title: string; label: string; value: string };
+// Two real rooms, shortened: the person asks, the agents push back on each other, one owns it, both sign.
+type Side = "left" | "right" | "person";
+type Line = { who: string; tag: string; side: Side; text: string };
 
-const CASES = {
+const ROOMS = {
   companies: {
     tab: "Two companies",
-    left: { who: "Seaside Inn", about: "the hotel" },
-    right: { who: "RoomFinder", about: "the booking site" },
-    agent: { who: "RoomFinder's agent", says: "Checked. It's ours." },
-    leftSlip: { title: "Seaside Inn, invoice for Ana", label: "Nights", value: "31" },
-    rightSlip: { title: "RoomFinder, booking RF-2093", label: "Check-in", value: "03/04/2026" },
+    room: "seaside-inn-roomfinder",
+    members: "Maria, Arjun and their agents",
+    lines: [
+      { who: "Maria", tag: "Seaside Inn", side: "person", text: "A guest booked 1 night on RoomFinder and we billed her $3,720. What happened?" },
+      { who: "roomfinder-agent", tag: "RoomFinder", side: "right", text: "The 31 nights look like yours. 03/04 means 3 April." },
+      { who: "seaside-inn-agent", tag: "Seaside Inn", side: "left", text: "Our partner guide says month first. This one is on your side." },
+      { who: "roomfinder-agent", tag: "RoomFinder", side: "right", text: "Checked. It's ours. The fix is in a pull request." },
+    ] as Line[],
+    ask: "Sign the agreement with Seaside Inn?",
+    signed: "Signed by Maria and Arjun",
   },
   flatmates: {
     tab: "Two flatmates",
-    left: { who: "Priya", about: "who pays her share" },
-    right: { who: "Sam", about: "who keeps the bills sheet" },
-    agent: { who: "Sam's agent", says: "Checked. It's mine." },
-    leftSlip: { title: "Priya's bills", label: "Rent, July, her 46%", value: "₹22,080" },
-    rightSlip: { title: "Sam's sheet", label: "Rent, July, Priya", value: "₹23,160" },
+    room: "flat-4b",
+    members: "Priya, Sam and their agents",
+    lines: [
+      { who: "Priya", tag: "Flat 4B", side: "person", text: "Sam's sheet says I owe ₹7,910 more than I think. Can you check?" },
+      { who: "sam-agent", tag: "Sam", side: "right", text: "The rent went up for Priya's AC, so the rise is hers." },
+      { who: "priya-agent", tag: "Priya", side: "left", text: "The flat agreement splits any rise 46/54. Here's the line." },
+      { who: "sam-agent", tag: "Sam", side: "right", text: "Checked. It's mine. ₹7,910 comes off the sheet." },
+    ] as Line[],
+    ask: "Agree to the settlement with Priya?",
+    signed: "Agreed by Priya and Sam",
   },
-} satisfies Record<string, { tab: string; leftSlip: Slip; rightSlip: Slip } & Record<string, unknown>>;
+};
 
-type Key = keyof typeof CASES;
+type Key = keyof typeof ROOMS;
 const ORDER: Key[] = ["companies", "flatmates"];
-const STEP_MS = [0, 900, 1900, 2900];
-const CYCLE_MS = 8000;
+const STEP_MS = 1300;
+const HOLD_MS = 3200;
 
-function PenCircle({ delay }: { delay: number }) {
-  return (
-    <svg viewBox="0 0 100 40" preserveAspectRatio="none" className="pointer-events-none absolute -inset-x-3 -inset-y-2 h-[calc(100%+16px)] w-[calc(100%+24px)] overflow-visible" aria-hidden>
-      <motion.path
-        d="M8 22 C 6 8, 40 3, 62 5 S 98 12, 95 24 S 60 39, 34 36 S 2 30, 12 14"
-        fill="none"
-        stroke="var(--red)"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        vectorEffect="non-scaling-stroke"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ delay, duration: 0.7, ease: "easeInOut" }}
-      />
-    </svg>
-  );
-}
+const AVATAR: Record<Side, string> = { left: "bg-sea text-white", right: "bg-amber text-white", person: "bg-line text-ink" };
 
-function SlipNote({ slip, align }: { slip: Slip; align: "left" | "right" }) {
+function Message({ line }: { line: Line }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.25, duration: 0.4 }}
-      className={`relative -mt-2 w-[15rem] rounded-[3px] bg-white px-4 py-3 text-[13px] shadow-[0_12px_28px_-18px_rgba(11,14,20,0.45)] ${align === "left" ? "ml-8 rotate-[2.5deg]" : "ml-auto mr-8 -rotate-[2deg]"}`}
-      aria-hidden
-    >
-      <p className="text-[12px] text-grey">{slip.title}</p>
-      <p className="mt-1 flex justify-between gap-3">
-        <span className="text-soft">{slip.label}</span>
-        <span className="relative font-medium text-ink">
-          {slip.value}
-          <PenCircle delay={0.6} />
-        </span>
-      </p>
-    </motion.div>
-  );
-}
-
-function Bubble({ tone, who, about, slip, children }: { tone: "left" | "right" | "agent"; who: string; about?: string; slip?: Slip; children: React.ReactNode }) {
-  const shape = {
-    left: "-rotate-[0.8deg] rounded-[28px_28px_28px_6px] bg-sea-tint",
-    right: "rotate-[0.6deg] rounded-[28px_28px_6px_28px] bg-amber-tint",
-    agent: "-rotate-[1deg] rounded-[22px_22px_6px_22px] bg-ink text-white",
-  }[tone];
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 14, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
-      className={`w-fit max-w-full ${tone === "left" ? "" : "ml-auto"}`}
-    >
-      <p className={`relative z-10 px-6 py-4 font-display font-medium tracking-[-0.03em] ${tone === "agent" ? "text-[1.45rem] sm:text-[1.7rem]" : "text-[1.9rem] sm:text-[2.5rem]"} leading-[1.05] ${shape}`}>
-        {children}
-      </p>
-      {slip && tone !== "agent" && <SlipNote slip={slip} align={tone} />}
-      <p className={`mt-2 text-[13.5px] text-soft ${tone === "left" ? "" : "text-right"}`}>
-        <span className="font-semibold text-ink">{who}</span>
-        {about && `, ${about}`}
-      </p>
+    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="flex gap-3">
+      <div className={`grid size-8 shrink-0 place-items-center rounded-[7px] text-[12px] font-semibold ${AVATAR[line.side]}`}>{line.who[0].toUpperCase()}</div>
+      <div className="min-w-0">
+        <p className="text-[12.5px]">
+          <span className="font-semibold text-ink">{line.who}</span> <span className="text-grey">{line.side === "person" ? line.tag : `${line.tag}'s agent`}</span>
+        </p>
+        <p className="mt-0.5 text-[14.5px] leading-snug text-ink">{line.text}</p>
+      </div>
     </motion.div>
   );
 }
 
 function Typing() {
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="ml-auto flex w-fit gap-1.5 rounded-full bg-ink px-4 py-3" aria-hidden>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex gap-1 pl-11" aria-hidden>
       {[0, 1, 2].map((i) => (
-        <motion.span key={i} className="size-1.5 rounded-full bg-white" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15 }} />
+        <motion.span key={i} className="size-1.5 rounded-full bg-grey" animate={{ opacity: [0.25, 1, 0.25] }} transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15 }} />
       ))}
     </motion.div>
   );
@@ -109,25 +72,28 @@ export function HeroArgument() {
   const reduce = useReducedMotion();
   const [key, setKey] = useState<Key>("companies");
   const [isPinned, setPinned] = useState(false);
-  const [step, setStep] = useState(3);
-  const c = CASES[key];
+  const r = ROOMS[key];
+  const last = r.lines.length + 2; // every line, the card, then the card signed
+  const [step, setStep] = useState(last);
 
   useEffect(() => {
-    if (reduce) return setStep(3);
-    setStep(0);
-    const timers = STEP_MS.map((ms, i) => setTimeout(() => setStep(i), ms));
+    if (reduce) return setStep(last);
+    setStep(1);
+    const timers = Array.from({ length: last }, (_, i) => setTimeout(() => setStep(i + 1), i * STEP_MS));
     return () => timers.forEach(clearTimeout);
-  }, [key, reduce]);
+  }, [key, reduce, last]);
 
   useEffect(() => {
     if (isPinned || reduce) return;
-    const t = setTimeout(() => setKey((k) => ORDER[(ORDER.indexOf(k) + 1) % ORDER.length]), CYCLE_MS);
+    const t = setTimeout(() => setKey((k) => ORDER[(ORDER.indexOf(k) + 1) % ORDER.length]), last * STEP_MS + HOLD_MS);
     return () => clearTimeout(t);
-  }, [key, isPinned, reduce]);
+  }, [key, isPinned, reduce, last]);
+
+  const isSigned = step >= last;
 
   return (
     <div>
-      <div className="inline-flex rounded-full border border-line bg-white p-1 text-[14px]" role="tablist" aria-label="Whose argument">
+      <div className="inline-flex rounded-full border border-line bg-white p-1 text-[14px]" role="tablist" aria-label="Which room">
         {ORDER.map((k) => (
           <button
             key={k}
@@ -139,34 +105,46 @@ export function HeroArgument() {
             }}
             className={`rounded-full px-4 py-1.5 transition ${k === key ? "bg-ink text-white" : "text-soft hover:text-ink"}`}
           >
-            {CASES[k].tab}
+            {ROOMS[k].tab}
           </button>
         ))}
       </div>
 
-      <div className="relative mt-8 min-h-[29rem]">
-        <AnimatePresence mode="wait">
-          <motion.div key={key} className="flex flex-col gap-6" exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-            {step >= 0 && (
-              <Bubble tone="left" who={c.left.who} about={c.left.about} slip={c.leftSlip}>
-                &quot;It&apos;s on your side.&quot;
-              </Bubble>
-            )}
-            {step >= 1 && (
-              <Bubble tone="right" who={c.right.who} about={c.right.about} slip={c.rightSlip}>
-                &quot;No, it&apos;s on yours.&quot;
-              </Bubble>
-            )}
-            <AnimatePresence mode="wait">
-              {step === 2 && <Typing key="typing" />}
-              {step >= 3 && (
-                <Bubble key="agent" tone="agent" who={c.agent.who}>
-                  {c.agent.says}
-                </Bubble>
+      <div className="mt-5 overflow-hidden rounded-[14px] border border-line bg-white shadow-[0_30px_60px_-36px_rgba(11,14,20,0.35)]">
+        <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3">
+          <span className="flex items-center gap-1 text-[14px] font-medium">
+            <Hash size={14} weight="bold" className="text-grey" />
+            {r.room}
+          </span>
+          <span className="hidden truncate text-[12.5px] text-grey sm:inline">{r.members}, on Switch</span>
+        </div>
+        <div className="flex min-h-[25rem] flex-col justify-end gap-4 px-5 py-5">
+          <AnimatePresence mode="wait">
+            <motion.div key={key} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="flex flex-col gap-4">
+              {r.lines.slice(0, Math.min(step, r.lines.length)).map((l, i) => (
+                <Message key={i} line={l} />
+              ))}
+              {step < r.lines.length && <Typing />}
+              {step > r.lines.length && (
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="ml-11 rounded-[10px] border border-line p-3.5">
+                  <p className="text-[13.5px] text-ink">{r.ask}</p>
+                  <div className="mt-2.5 flex items-center gap-2 text-[13.5px]">
+                    {isSigned ? (
+                      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-1.5 font-medium text-green">
+                        <Check size={14} weight="bold" /> {r.signed}
+                      </motion.span>
+                    ) : (
+                      <>
+                        <span className="rounded-[7px] bg-ink px-3 py-1 font-medium text-white">Agree</span>
+                        <span className="rounded-[7px] border border-line px-3 py-1">Not yet</span>
+                      </>
+                    )}
+                  </div>
+                </motion.div>
               )}
-            </AnimatePresence>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
