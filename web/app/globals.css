@@ -54,14 +54,3 @@ summary::-webkit-details-marker { display: none; }
 
 /* Demo chapter bars fill like a video timeline. */
 @keyframes chapter-fill { from { width: 0%; } to { width: 100%; } }
-
-/* Hero backdrop: booking messages flow from each company toward the seam in the middle. */
-@keyframes flow-in-left { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-@keyframes flow-in-right { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes seam-glow { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.9; } }
-.flow-left { animation: flow-in-left var(--d, 40s) linear infinite; }
-.flow-right { animation: flow-in-right var(--d, 40s) linear infinite; }
-.seam-glow { animation: seam-glow 4s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .flow-left, .flow-right, .seam-glow { animation: none; }
-}

@@ -1,7 +1,7 @@
 import { ArrowRight, GithubLogo, Handshake, Play } from "@phosphor-icons/react/dist/ssr";
 import { Demo } from "@/components/demo";
 import { Stepper } from "@/components/stepper";
-import { HeroStreams } from "@/components/hero-backdrop";
+import { HeroArgument } from "@/components/hero-argument";
 import { REPO_URL, SWITCH_URL } from "@/components/links";
 
 const wrap = "mx-auto max-w-[1200px] px-5 md:px-8";
@@ -84,47 +84,21 @@ export default function Page() {
     <>
       <Nav />
       <main className="overflow-x-clip">
-        <section className="relative overflow-hidden">
-          {/* The hotel's half and the booking site's half, fading to white before the demo. */}
-          <div className="pointer-events-none absolute inset-0 grid grid-cols-2" aria-hidden>
-            <div className="bg-gradient-to-b from-sea-tint/70 to-white" />
-            <div className="bg-gradient-to-b from-amber-tint/70 to-white" />
-          </div>
-          <div className={`${wrap} relative pb-16 pt-20 text-center md:pb-20 md:pt-28`}>
-          <h1 className="mx-auto max-w-[22ch] lg:max-w-[32ch] font-display text-[2.6rem] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[3.4rem] lg:text-[4rem]">
-            &quot;It&apos;s on your side.&quot; <br className="hidden sm:block" />&quot;No, it&apos;s on yours.&quot;
-          </h1>
-          <p className="mx-auto mt-6 max-w-[41rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
-            Handshake gives each side its own AI agent in one shared chat. They check their own records, argue it out and agree whose
-            mistake it was. Nobody has to show their code or their bank statement.
-          </p>
-          <div className="mx-auto mt-10 grid max-w-[44rem] gap-6 text-left sm:grid-cols-2 sm:gap-10">
-            <a href="#demo" className="group block border-l-2 border-ink pl-4">
-              <span className="text-[13px] font-semibold text-ink">Two companies</span>
-              <span className="mt-1 block text-[15.5px] leading-snug text-ink">
-                A guest booked one night and was billed $3,720. The hotel and the booking site each said the bug was on the other side.
-              </span>
-              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">Watch the agents settle it <ArrowRight size={13} /></span>
-            </a>
-            <a href="#flatmates" className="group block border-l-2 border-ink pl-4">
-              <span className="text-[13px] font-semibold text-ink">Two flatmates</span>
-              <span className="mt-1 block text-[15.5px] leading-snug text-ink">
-                Sam keeps the bills sheet. It says Priya owes him ₹7,910 more than she thinks. Neither of them wants to start that conversation.
-              </span>
-              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">See how the flat settled it <ArrowRight size={13} /></span>
-            </a>
-          </div>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <a href="#demo" className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-5 py-3 text-[15px] font-medium text-white transition hover:bg-ink/85 active:scale-[0.98]">
-              Watch the demo
-            </a>
-            <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
-              View source <ArrowRight size={14} />
-            </a>
-          </div>
-          <div className="mt-16 md:mt-20">
-            <HeroStreams />
-          </div>
+        <section className={`${wrap} pb-20 pt-14 md:pb-28 md:pt-20`}>
+          <HeroArgument />
+          <div className="mt-14 grid gap-8 border-t border-line pt-8 md:mt-20 md:grid-cols-[1fr_auto] md:items-end">
+            <p className="max-w-[40rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
+              Handshake gives each side its own AI agent in one shared chat. They check their own records, argue it out and agree whose
+              mistake it was. Nobody has to show their code or their bank statement.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#demo" className={btnPrimary}>
+                Watch the demo
+              </a>
+              <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
+                View source <ArrowRight size={14} />
+              </a>
+            </div>
           </div>
         </section>
 
