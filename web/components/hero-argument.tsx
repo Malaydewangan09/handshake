@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Check, Hash } from "@phosphor-icons/react";
+import { Avatar } from "@/components/avatar";
 
 // Two real rooms, shortened: the person asks, the agents push back on each other, one owns it, both sign.
 type Side = "left" | "right" | "person";
@@ -19,6 +20,7 @@ const ROOMS = {
       { who: "seaside-inn-agent", tag: "Seaside Inn", side: "left", text: "Our partner guide says month first. This one is on your side." },
       { who: "roomfinder-agent", tag: "RoomFinder", side: "right", text: "Checked. It's ours. The fix is in a pull request." },
     ] as Line[],
+    owns: "our",
     ask: "Sign the agreement with Seaside Inn?",
     signed: "Signed by Maria and Arjun",
   },
@@ -32,6 +34,7 @@ const ROOMS = {
       { who: "priya-agent", tag: "Priya", side: "left", text: "The flat agreement splits any rise 46/54. Here's the line." },
       { who: "sam-agent", tag: "Sam", side: "right", text: "Checked. It's mine. ₹7,910 comes off the sheet." },
     ] as Line[],
+    owns: "my",
     ask: "Agree to the settlement with Priya?",
     signed: "Agreed by Priya and Sam",
   },
@@ -42,12 +45,11 @@ const ORDER: Key[] = ["companies", "flatmates"];
 const STEP_MS = 1300;
 const HOLD_MS = 3200;
 
-const AVATAR: Record<Side, string> = { left: "bg-sea text-white", right: "bg-amber text-white", person: "bg-line text-ink" };
 
 function Message({ line }: { line: Line }) {
   return (
     <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="flex gap-3">
-      <div className={`grid size-8 shrink-0 place-items-center rounded-[7px] text-[12px] font-semibold ${AVATAR[line.side]}`}>{line.who[0].toUpperCase()}</div>
+      <Avatar name={line.who} isAgent={line.side !== "person"} />
       <div className="min-w-0">
         <p className="text-[12.5px]">
           <span className="font-semibold text-ink">{line.who}</span> <span className="text-grey">{line.side === "person" ? line.tag : `${line.tag}'s agent`}</span>
@@ -68,7 +70,7 @@ function Typing() {
   );
 }
 
-export function HeroArgument() {
+export function HeroArgument({ intro }: { intro: React.ReactNode }) {
   const reduce = useReducedMotion();
   const [key, setKey] = useState<Key>("companies");
   const [isPinned, setPinned] = useState(false);
@@ -90,8 +92,37 @@ export function HeroArgument() {
   }, [key, isPinned, reduce, last]);
 
   const isSigned = step >= last;
+  const isConceded = step >= r.lines.length;
+  const [word, setWord] = useState("your");
+  const [isEditing, setEditing] = useState(false);
+
+  // When the agent owns the mistake, the headline is edited to match: "your" is deleted and "our" (or "my") typed in.
+  useEffect(() => {
+    // The cursor waits in the headline while they argue, and leaves once the edit is made.
+    if (!isConceded) {
+      setWord("your");
+      return setEditing(true);
+    }
+    if (reduce) return setWord(r.owns);
+    const frames = ["you", "yo", "y", "", ...Array.from(r.owns, (_, i) => r.owns.slice(0, i + 1))];
+    setEditing(true);
+    const timers = frames.map((f, i) => setTimeout(() => setWord(f), 250 + i * 110));
+    timers.push(setTimeout(() => setEditing(false), 250 + frames.length * 110 + 1400));
+    return () => timers.forEach(clearTimeout);
+  }, [isConceded, key, reduce, r.owns]);
 
   return (
+    <>
+    <div>
+      <p className="font-display text-[3.2rem] font-semibold leading-[1] tracking-[-0.045em] sm:text-[4.4rem] lg:text-[5.4rem]" aria-hidden>
+        &quot;It&apos;s on{" "}
+        <span>{word}</span>
+        <span className={`ml-0.5 inline-block h-[0.82em] w-[3px] translate-y-[0.08em] bg-ink ${isEditing ? "animate-pulse" : "opacity-0"}`} aria-hidden />
+        {" "}side.&quot;
+      </p>
+      <h1 className="mt-6 font-display text-[1.6rem] font-medium leading-tight tracking-[-0.02em] text-ink sm:text-[1.9rem]">Let the agents argue it out.</h1>
+      {intro}
+    </div>
     <div>
       <div className="inline-flex rounded-full border border-line bg-white p-1 text-[14px]" role="tablist" aria-label="Which room">
         {ORDER.map((k) => (
@@ -110,7 +141,8 @@ export function HeroArgument() {
         ))}
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-[14px] border border-line bg-white shadow-[0_30px_60px_-36px_rgba(11,14,20,0.35)]">
+      <div className="mt-5">
+      <div className="overflow-hidden rounded-[14px] border border-line bg-white shadow-[0_30px_60px_-36px_rgba(11,14,20,0.35)]">
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3">
           <span className="flex items-center gap-1 text-[14px] font-medium">
             <Hash size={14} weight="bold" className="text-grey" />
@@ -118,7 +150,7 @@ export function HeroArgument() {
           </span>
           <span className="hidden truncate text-[12.5px] text-grey sm:inline">{r.members}, on Switch</span>
         </div>
-        <div className="flex min-h-[25rem] flex-col justify-end gap-4 px-5 py-5">
+        <div className="flex min-h-[25rem] flex-col justify-start gap-4 px-5 py-5">
           <AnimatePresence mode="wait">
             <motion.div key={key} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="flex flex-col gap-4">
               {r.lines.slice(0, Math.min(step, r.lines.length)).map((l, i) => (
@@ -146,6 +178,8 @@ export function HeroArgument() {
           </AnimatePresence>
         </div>
       </div>
+      </div>
     </div>
+    </>
   );
 }

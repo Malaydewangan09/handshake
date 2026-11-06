@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { Avatar } from "@/components/avatar";
 import { Check, Cursor, GitMerge, GitPullRequest, Hash, X } from "@phosphor-icons/react";
 
 // The Handshake room, drawn as the product. Every word comes from the demo run, shortened for the screen.
@@ -22,15 +23,10 @@ const HARM = [
 
 const enter = { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } } as const;
 
-function Avatar({ label, tone }: { label: string; tone: "sea" | "sand" | "person" }) {
-  const cls = tone === "sea" ? "bg-sea text-white" : tone === "sand" ? "bg-amber text-white" : "bg-[#e8e8ed] text-[#1d1d1f]";
-  return <div className={`grid size-7 shrink-0 place-items-center rounded-md text-[11px] font-semibold ${cls}`}>{label}</div>;
-}
-
 function Msg({ who, tag, tone, children }: { who: string; tag?: string; tone: "sea" | "sand" | "person"; children: React.ReactNode }) {
   return (
     <motion.div {...enter} className="flex gap-2.5">
-      <Avatar label={who[0].toUpperCase()} tone={tone} />
+      <Avatar name={who} isAgent={tone !== "person"} size={28} />
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-1.5 text-[12px]">
           <span className="font-semibold text-[#1d1d1f]">{who}</span>
@@ -101,19 +97,22 @@ function Decision({ title, text, before, ask, done, click }: { title: string; te
         {pressed ? (
           <motion.span {...enter}>{chip(done)}</motion.span>
         ) : (
-          <span className="rounded-md bg-[#1d1d1f] px-3 py-1 text-[11.5px] font-semibold text-white">{ask}</span>
+          <span className="relative rounded-md bg-[#1d1d1f] px-3 py-1 text-[11.5px] font-semibold text-white">
+            {ask}
+            {/* Anchored to the button, so it lands on it at any width. */}
+            {click && (
+              <motion.span
+                className="pointer-events-none absolute left-1/2 top-1/2 z-10"
+                initial={{ x: 140, y: 60, opacity: 0 }}
+                animate={{ x: 0, y: 0, opacity: 1, scale: [1, 1, 0.82, 1] }}
+                transition={{ duration: 1.1, ease: [0.45, 0, 0.2, 1], scale: { times: [0, 0.8, 0.9, 1], duration: 1.1 } }}
+              >
+                <Cursor size={20} weight="fill" className="text-[#1d1d1f] drop-shadow" />
+              </motion.span>
+            )}
+          </span>
         )}
       </div>
-      {click && !pressed && (
-        <motion.div
-          className="pointer-events-none absolute"
-          initial={{ left: "80%", top: "120%", opacity: 0 }}
-          animate={{ left: before ? "52%" : "18%", top: "74%", opacity: 1, scale: [1, 1, 0.82, 1] }}
-          transition={{ duration: 1.1, ease: [0.45, 0, 0.2, 1], scale: { times: [0, 0.8, 0.9, 1], duration: 1.1 } }}
-        >
-          <Cursor size={20} weight="fill" className="text-[#1d1d1f] drop-shadow" />
-        </motion.div>
-      )}
     </div>
   );
 }

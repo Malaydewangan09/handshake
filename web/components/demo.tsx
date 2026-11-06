@@ -32,7 +32,7 @@ export function Demo() {
   return (
     <div ref={ref}>
       <AppWindow key={i === 0 ? "start" : "run"} stage={ch.stage} clicking={!reduce} />
-      <div className="mx-auto mt-6 flex max-w-3xl gap-2 px-2" role="tablist" aria-label="Demo chapters">
+      <div className="mx-auto mt-6 flex max-w-3xl gap-2 rounded-[12px] bg-black/45 px-4 pb-2.5 pt-3.5 backdrop-blur-md" role="tablist" aria-label="Demo chapters">
         {CHAPTERS.map((c, n) => (
           <button
             key={c.label}
@@ -41,10 +41,10 @@ export function Demo() {
             onClick={() => setI(n)}
             className="group flex-1 text-left"
           >
-            <span className="block h-[3px] overflow-hidden rounded-full bg-ink/10">
+            <span className="block h-[3px] overflow-hidden rounded-full bg-white/30">
               <span
                 key={n === i ? `on-${i}` : `off-${n}`}
-                className="block h-full rounded-full bg-ink"
+                className="block h-full rounded-full bg-white"
                 style={
                   n === i && !reduce
                     ? { animation: `chapter-fill ${c.ms}ms linear forwards` }
@@ -52,7 +52,7 @@ export function Demo() {
                 }
               />
             </span>
-            <span className={`mt-2 block text-[10px] font-medium sm:text-[11.5px] ${n === i ? "text-ink" : "text-grey group-hover:text-soft"}`}>{c.label}</span>
+            <span className={`mt-2 block text-[10px] font-medium sm:text-[11.5px] ${n === i ? "text-white" : "text-white/70 group-hover:text-white"}`}>{c.label}</span>
           </button>
         ))}
       </div>

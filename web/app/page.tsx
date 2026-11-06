@@ -85,37 +85,34 @@ export default function Page() {
     <>
       <Nav />
       <main className="overflow-x-clip">
-        <section className="relative overflow-hidden bg-wash">
-          {/* Each side's colour, faint, as the light on its half of the desk. */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(45%_55%_at_12%_20%,var(--sea-tint),transparent_70%),radial-gradient(45%_55%_at_92%_85%,var(--amber-tint),transparent_70%)]" aria-hidden />
-          <div className={`${wrap} relative grid grid-cols-1 items-center gap-12 pb-20 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16`}>
-            <div>
-              <h1 className="max-w-[14ch] font-display text-[2.8rem] font-medium leading-[1.04] tracking-[-0.035em] sm:text-[3.6rem] lg:text-[4.2rem]">
-                Let the agents argue it out
-              </h1>
-              <p className="mt-6 max-w-[34rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
-                Two companies blaming each other for a bug. Two flatmates who don&apos;t agree on the bills. Handshake gives each side its own
-                AI agent in one shared chat, and they check their own records until both agree whose mistake it was. Nobody has to show their
-                code or their bank statement.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <a href="#demo" className={btnPrimary}>
-                  Watch the demo
-                </a>
-                <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line bg-white px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
-                  View source <ArrowRight size={14} />
-                </a>
-              </div>
-            </div>
-            <HeroArgument />
+        <section className="relative isolate overflow-hidden bg-white">
+          <div className={`${wrap} grid grid-cols-1 items-center gap-12 pb-36 pt-14 md:pb-44 md:pt-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16`}>
+            <HeroArgument
+              intro={
+                <>
+                  <p className="mt-3 max-w-[34rem] text-pretty text-[17px] leading-relaxed text-soft md:text-[18px]">
+                    Two companies blaming each other for a bug. Two flatmates who don&apos;t agree on the bills. Handshake gives each side its
+                    own AI agent in one shared chat. They check their own records and argue it out until one of them owns it. Nobody has to
+                    show their code or their bank statement.
+                  </p>
+                  <div className="mt-9 flex flex-wrap gap-3">
+                    <a href="#demo" className={btnPrimary}>
+                      Watch the demo
+                    </a>
+                    <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line bg-white px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
+                      View source <ArrowRight size={14} />
+                    </a>
+                  </div>
+                </>
+              }
+            />
           </div>
         </section>
 
-        <section className={wrap}>
+        <section className={`${wrap} relative z-10 -mt-24 md:-mt-32`}>
           <div className="relative overflow-hidden rounded-[18px]">
-            {/* Sky, sea and sand: Seaside Inn's coast, drawn sharp so the product sits somewhere real. */}
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,#bcd7f2_0%,#7fb0e0_24%,#2f6fb6_46%,#1d5a9c_58%,#e9d3ad_80%,#f4e6cc_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(70%_40%_at_70%_8%,rgba(255,255,255,0.55),transparent_70%)]" />
+            {/* Seaside Inn's lobby, out of focus, so the room sits somewhere real. Photo: Aalo Lens on Unsplash. */}
+            <img src="/lobby.jpg" alt="" className="absolute inset-0 size-full scale-110 object-cover" />
             <div className="relative px-3 pb-6 pt-8 sm:px-8 md:px-14 md:pb-10 md:pt-14">
               <Demo />
             </div>
