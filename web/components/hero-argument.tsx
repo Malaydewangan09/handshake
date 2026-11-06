@@ -42,7 +42,7 @@ const ROOMS = {
 
 type Key = keyof typeof ROOMS;
 const ORDER: Key[] = ["companies", "flatmates"];
-const STEP_MS = 1300;
+const STEP_MS = 850;
 const HOLD_MS = 3200;
 
 
@@ -96,18 +96,19 @@ export function HeroArgument({ intro }: { intro: React.ReactNode }) {
   const [word, setWord] = useState("your");
   const [isEditing, setEditing] = useState(false);
 
+  // The cursor shows up as the argument turns, just before the headline is edited.
+  const isCursorVisible = isEditing || step === r.lines.length - 1;
   // When the agent owns the mistake, the headline is edited to match: "your" is deleted and "our" (or "my") typed in.
   useEffect(() => {
-    // The cursor waits in the headline while they argue, and leaves once the edit is made.
     if (!isConceded) {
       setWord("your");
-      return setEditing(true);
+      return setEditing(false);
     }
     if (reduce) return setWord(r.owns);
     const frames = ["you", "yo", "y", "", ...Array.from(r.owns, (_, i) => r.owns.slice(0, i + 1))];
     setEditing(true);
-    const timers = frames.map((f, i) => setTimeout(() => setWord(f), 250 + i * 110));
-    timers.push(setTimeout(() => setEditing(false), 250 + frames.length * 110 + 1400));
+    const timers = frames.map((f, i) => setTimeout(() => setWord(f), 150 + i * 75));
+    timers.push(setTimeout(() => setEditing(false), 150 + frames.length * 75 + 900));
     return () => timers.forEach(clearTimeout);
   }, [isConceded, key, reduce, r.owns]);
 
@@ -117,7 +118,7 @@ export function HeroArgument({ intro }: { intro: React.ReactNode }) {
       <p className="font-display text-[3.2rem] font-semibold leading-[1] tracking-[-0.045em] sm:text-[4.4rem] lg:text-[5.4rem]" aria-hidden>
         &quot;It&apos;s on{" "}
         <span>{word}</span>
-        <span className={`ml-0.5 inline-block h-[0.82em] w-[3px] translate-y-[0.08em] bg-ink ${isEditing ? "animate-pulse" : "opacity-0"}`} aria-hidden />
+        <span className={`ml-0.5 inline-block h-[0.82em] w-[3px] translate-y-[0.08em] bg-ink ${isCursorVisible ? "animate-pulse" : "opacity-0"}`} aria-hidden />
         {" "}side.&quot;
       </p>
       <h1 className="mt-6 font-display text-[1.6rem] font-medium leading-tight tracking-[-0.02em] text-ink sm:text-[1.9rem]">Let the agents argue it out.</h1>
