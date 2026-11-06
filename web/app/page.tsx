@@ -1,15 +1,16 @@
 import { ArrowRight, GithubLogo, Handshake, Play } from "@phosphor-icons/react/dist/ssr";
 import { Demo } from "@/components/demo";
 import { Stepper } from "@/components/stepper";
+import { TryTheCard } from "@/components/try-the-card";
 import { HeroArgument } from "@/components/hero-argument";
 import { REPO_URL, SWITCH_URL } from "@/components/links";
 
 const wrap = "mx-auto max-w-[1200px] px-5 md:px-8";
 
 const SWITCH = [
-  ["Each agent works for one company", "RoomFinder's people can't instruct the hotel's agent, and the hotel's can't instruct RoomFinder's. Switch enforces it."],
-  ["Buttons only the right person can press", "Signing the agreement or holding a release is a button in the chat. Only that company's people can press it."],
-  ["One room, one history", "Both companies see the same conversation, the same results and the same signed agreement."],
+  ["Each agent works for one side", "RoomFinder can't instruct the hotel's agent, and Sam can't instruct Priya's. Switch enforces it."],
+  ["Buttons only the right person can press", "Signing a settlement or holding a release is a button in the chat. Only that side's people can press it. Try the card on the left."],
+  ["One room, one history", "Both sides see the same conversation, the same results and the same signed agreement."],
   ["Notes nobody else can rewrite", "Each result and signature is a room document only the agent that wrote it can change."],
 ];
 
@@ -164,6 +165,7 @@ export default function Page() {
 
         <section className="bg-wash py-28 md:py-36">
           <div className={`${wrap} grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20`}>
+            <div>
             <Heading
               sub={
                 <>
@@ -174,6 +176,8 @@ export default function Page() {
             >
               Built on Switch
             </Heading>
+            <TryTheCard />
+            </div>
             <dl className="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2">
               {SWITCH.map(([t, d]) => (
                 <div key={t}>
