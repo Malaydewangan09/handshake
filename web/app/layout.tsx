@@ -9,7 +9,7 @@ const display = Inter_Tight({ subsets: ["latin"], weight: ["500", "600", "700"],
 export const metadata: Metadata = {
   title: "Handshake",
   description:
-    "When something breaks between two companies, each one's AI agent checks its own side in a shared chat, finds whose bug it is and every customer it hit, and fixes it in a pull request. No code changes hands.",
+    "Each side's AI agent checks its own records in a shared chat and finds whose mistake it is: a bug between two companies, or a bills sheet between two flatmates. Nobody sees the other's code or records.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -38,7 +38,7 @@ const FAQ = [
   ["When is a bug marked fixed?", "When the fix is released and the other company's agent has run the bookings again on its own system. A merged pull request is not enough."],
   ["Who can press the buttons in the chat?", "Only that company's own people. Switch refuses a button press from anyone else."],
   ["Which chat apps does it work in?", "Any that Switch connects: Slack, Microsoft Teams, Discord, Mattermost and Telegram. The demo runs in Mattermost on one laptop."],
-  ["Is it ready for real hotels?", "Not yet. It was built in a week for the Flip the Switch hackathon, and both companies in the demo are made up. The bugs are real kinds of bugs."],
+  ["Is it ready for real hotels?", "Not yet. It is an experiment made for the Flip the Switch hackathon, and everyone in the demos is made up. The bugs are real kinds of bugs."],
 ];
 
 const btnPrimary = "inline-flex items-center gap-2 rounded-[8px] bg-ink px-5 py-3 text-[15px] font-medium text-white transition hover:bg-ink/85 active:scale-[0.98]";
@@ -55,6 +55,7 @@ function Nav() {
           <nav className="hidden items-center gap-7 text-[14px] text-soft md:flex">
             <a href="#why" className="hover:text-ink">Why</a>
             <a href="#how" className="hover:text-ink">How it works</a>
+            <a href="#flatmates" className="hover:text-ink">Flatmates</a>
             <a href="#faq" className="hover:text-ink">FAQ</a>
           </nav>
         </div>
@@ -90,14 +91,30 @@ export default function Page() {
             <div className="bg-gradient-to-b from-amber-tint/70 to-white" />
           </div>
           <div className={`${wrap} relative pb-16 pt-20 text-center md:pb-20 md:pt-28`}>
-          <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-sea">For teams whose systems talk to other companies</p>
-          <h1 className="mx-auto mt-5 max-w-[22ch] font-display text-[2.6rem] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[3.4rem] lg:text-[4rem]">
-            Catch the bugs that live between two companies
+          <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-sea">For two companies, or two flatmates</p>
+          <h1 className="mx-auto mt-5 max-w-[22ch] lg:max-w-[32ch] font-display text-[2.6rem] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[3.4rem] lg:text-[4rem]">
+            Find out whose mistake it is without handing over your records
           </h1>
           <p className="mx-auto mt-6 max-w-[41rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
-            Each company&apos;s AI agent checks its own side in one shared chat. In minutes both know whose bug it is and every customer it
-            already hit. The owner fixes it in a pull request, and a signed agreement stops it coming back. No code changes hands.
+            Each side&apos;s AI agent checks its own records in one shared chat, and in minutes both know whose mistake it is and what it
+            cost. Nobody sees the other&apos;s code or records.
           </p>
+          <div className="mx-auto mt-10 grid max-w-[44rem] gap-6 text-left sm:grid-cols-2 sm:gap-10">
+            <a href="#demo" className="group block border-l-2 border-ink pl-4">
+              <span className="text-[13px] font-semibold text-ink">Two companies</span>
+              <span className="mt-1 block text-[15.5px] leading-snug text-ink">
+                A guest booked one night and the hotel billed her $3,720. Each company said it was the other&apos;s bug.
+              </span>
+              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">See who was right <ArrowRight size={13} /></span>
+            </a>
+            <a href="#flatmates" className="group block border-l-2 border-ink pl-4">
+              <span className="text-[13px] font-semibold text-ink">Two flatmates</span>
+              <span className="mt-1 block text-[15.5px] leading-snug text-ink">
+                Sam&apos;s bills sheet said Priya owed him ₹7,910 more than she thought. Neither wanted to hand over a bank statement.
+              </span>
+              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">See how they settled <ArrowRight size={13} /></span>
+            </a>
+          </div>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a href="#demo" className="inline-flex items-center gap-2 rounded-[8px] bg-ink px-5 py-3 text-[15px] font-medium text-white transition hover:bg-ink/85 active:scale-[0.98]">
               Watch the demo
@@ -177,7 +194,7 @@ export default function Page() {
             <Heading
               sub={
                 <>
-                  <a href={SWITCH_URL} className="text-ink underline underline-offset-4">Switch</a> lets two companies&apos; agents and people share one room
+                  <a href={SWITCH_URL} className="text-ink underline underline-offset-4">Switch</a> lets two sides&apos; agents and people share one room
                   safely. Without it there is no shared room, no ownership and no approvals.
                 </>
               }
