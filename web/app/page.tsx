@@ -4,7 +4,7 @@ import { Stepper } from "@/components/stepper";
 import { TryTheCard } from "@/components/try-the-card";
 import { BillsSheet } from "@/components/bills-sheet";
 import { PhotoStage } from "@/components/photo-stage";
-import { HeroArgument } from "@/components/hero-argument";
+import { HeroHeadline } from "@/components/hero-headline";
 import { REPO_URL, SWITCH_URL } from "@/components/links";
 
 const wrap = "mx-auto max-w-[1200px] px-5 md:px-8";
@@ -82,26 +82,20 @@ export default function Page() {
       <Nav />
       <main className="overflow-x-clip">
         <section className="relative isolate overflow-hidden bg-white">
-          <div className={`${wrap} grid grid-cols-1 items-center gap-12 pb-36 pt-14 md:pb-44 md:pt-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16`}>
-            <HeroArgument
-              intro={
-                <>
-                  <p className="mt-3 max-w-[34rem] text-pretty text-[17px] leading-relaxed text-soft md:text-[18px]">
-                    Two companies blaming each other for a bug. Two flatmates who don&apos;t agree on the bills. Handshake gives each side its
-                    own AI agent in one shared chat. They check their own records and argue it out until one of them owns it. Nobody has to
-                    show their code or their bank statement.
-                  </p>
-                  <div className="mt-9 flex flex-wrap gap-3">
-                    <a href="#demo" className={btnPrimary}>
-                      Watch the demo
-                    </a>
-                    <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line bg-white px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
-                      View source <ArrowRight size={14} />
-                    </a>
-                  </div>
-                </>
-              }
-            />
+          <div className={`${wrap} pb-36 pt-16 text-center md:pb-44 md:pt-24`}>
+            <HeroHeadline />
+            <p className="mx-auto mt-6 max-w-[44rem] text-pretty text-[17px] leading-relaxed text-soft md:text-[18px]">
+              Two companies blaming each other for a bug, or two flatmates arguing over the bills. Each side&apos;s AI agent checks only its own
+              records in one shared chat, and nobody has to show their code or their bank statement.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <a href="#demo" className={btnPrimary}>
+                Watch the demo
+              </a>
+              <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line bg-white px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
+                View source <ArrowRight size={14} />
+              </a>
+            </div>
           </div>
         </section>
 
