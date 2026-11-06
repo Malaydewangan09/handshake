@@ -91,28 +91,27 @@ export default function Page() {
             <div className="bg-gradient-to-b from-amber-tint/70 to-white" />
           </div>
           <div className={`${wrap} relative pb-16 pt-20 text-center md:pb-20 md:pt-28`}>
-          <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-sea">For two companies, or two flatmates</p>
-          <h1 className="mx-auto mt-5 max-w-[22ch] lg:max-w-[32ch] font-display text-[2.6rem] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[3.4rem] lg:text-[4rem]">
-            Find out whose mistake it is without handing over your records
+          <h1 className="mx-auto max-w-[22ch] lg:max-w-[32ch] font-display text-[2.6rem] font-medium leading-[1.08] tracking-[-0.03em] sm:text-[3.4rem] lg:text-[4rem]">
+            &quot;It&apos;s on your side.&quot; <br className="hidden sm:block" />&quot;No, it&apos;s on yours.&quot;
           </h1>
           <p className="mx-auto mt-6 max-w-[41rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
-            Each side&apos;s AI agent checks its own records in one shared chat, and in minutes both know whose mistake it is and what it
-            cost. Nobody sees the other&apos;s code or records.
+            Handshake gives each side its own AI agent in one shared chat. They check their own records, argue it out and agree whose
+            mistake it was. Nobody has to show their code or their bank statement.
           </p>
           <div className="mx-auto mt-10 grid max-w-[44rem] gap-6 text-left sm:grid-cols-2 sm:gap-10">
             <a href="#demo" className="group block border-l-2 border-ink pl-4">
               <span className="text-[13px] font-semibold text-ink">Two companies</span>
               <span className="mt-1 block text-[15.5px] leading-snug text-ink">
-                A guest booked one night and the hotel billed her $3,720. Each company said it was the other&apos;s bug.
+                A guest booked one night and was billed $3,720. The hotel and the booking site each said the bug was on the other side.
               </span>
-              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">See who was right <ArrowRight size={13} /></span>
+              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">Watch the agents settle it <ArrowRight size={13} /></span>
             </a>
             <a href="#flatmates" className="group block border-l-2 border-ink pl-4">
               <span className="text-[13px] font-semibold text-ink">Two flatmates</span>
               <span className="mt-1 block text-[15.5px] leading-snug text-ink">
-                Sam&apos;s bills sheet said Priya owed him ₹7,910 more than she thought. Neither wanted to hand over a bank statement.
+                Sam keeps the bills sheet. It says Priya owes him ₹7,910 more than she thinks. Neither of them wants to start that conversation.
               </span>
-              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">See how they settled <ArrowRight size={13} /></span>
+              <span className="mt-2 inline-flex items-center gap-1 text-[14px] text-soft group-hover:text-ink">See how the flat settled it <ArrowRight size={13} /></span>
             </a>
           </div>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
@@ -229,12 +228,13 @@ export default function Page() {
         <section id="flatmates" className="bg-wash py-28 md:py-36">
           <div className={`${wrap} grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20`}>
             <div>
-              <Heading sub="Priya and Sam share a flat. Sam pays the bills and keeps a sheet of her share. It said she owed him ₹7,910 more than she thought.">
-                Or two flatmates
+              <Heading sub="Priya and Sam share a flat. Sam pays the bills and keeps a sheet of what Priya owes. By October the sheet and Priya were ₹7,910 apart, and neither wanted to go through the other's bank statements.">
+                Same argument, smaller flat
               </Heading>
               <p className="mt-6 max-w-[42rem] text-[18px] leading-relaxed text-soft">
-                Same room, one agent each. Each reads only its own person&apos;s records and they compare bill numbers and amounts, never bank
-                statements. They argued, Sam&apos;s agent conceded, Sam fixed his sheet with one button and both signed.
+                So each of them got an agent. Priya&apos;s read her bills and receipts, Sam&apos;s read his sheet, and they compared bill numbers and
+                amounts in one shared chat. Sam&apos;s agent said the rent rise was for Priya&apos;s AC, until Priya&apos;s agent quoted the flat agreement.
+                Sam fixed his sheet with one button, and they both signed.
               </p>
             </div>
             {/* Sam's sheet, corrected by hand: the three lines the agents found. */}
