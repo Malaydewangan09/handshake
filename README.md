@@ -6,6 +6,8 @@ The same check works between two people. In the second demo, two flatmates' agen
 
 Built for the Flip the Switch hackathon (Track 1, Best Business Workflow, and Track 2, Best Personal or Creative Workflow), November 2026. An experiment, not production software. Site: https://handshake-switch.vercel.app
 
+Demo video, both stories in under 3 minutes: https://youtu.be/GaFeYKrB6q8
+
 ## The demo story
 
 Seaside Inn is a small hotel. RoomFinder is the website that sells its rooms. Both companies are made up, the bugs are real kinds of bugs.
