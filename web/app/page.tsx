@@ -2,6 +2,8 @@ import { ArrowRight, GithubLogo, Handshake, Play } from "@phosphor-icons/react/d
 import { Demo } from "@/components/demo";
 import { Stepper } from "@/components/stepper";
 import { TryTheCard } from "@/components/try-the-card";
+import { BillsSheet } from "@/components/bills-sheet";
+import { PhotoStage } from "@/components/photo-stage";
 import { HeroArgument } from "@/components/hero-argument";
 import { REPO_URL, SWITCH_URL } from "@/components/links";
 
@@ -9,7 +11,7 @@ const wrap = "mx-auto max-w-[1200px] px-5 md:px-8";
 
 const SWITCH = [
   ["Each agent works for one side", "RoomFinder can't instruct the hotel's agent, and Sam can't instruct Priya's. Switch enforces it."],
-  ["Buttons only the right person can press", "Signing a settlement or holding a release is a button in the chat. Only that side's people can press it. Try the card on the left."],
+  ["Buttons only the right person can press", "Signing a settlement or holding a release is a button in the chat. Only that side's people can press it. Try it."],
   ["One room, one history", "Both sides see the same conversation, the same results and the same signed agreement."],
   ["Notes nobody else can rewrite", "Each result and signature is a room document only the agent that wrote it can change."],
 ];
@@ -20,12 +22,6 @@ const ELSEWHERE = [
   ["A 1 kg parcel billed as 1,000 kg", "Online store and courier"],
   ["One bank transfer sent twice", "Banking app and bank"],
   ["A 9:00 flight shown as 21:00", "Travel site and airline"],
-];
-
-const FLAT_SHEET = [
-  ["Rent, a month, July to October", "₹23,160", "₹22,080", "The whole ₹2,000 rise was on Priya. Their agreement splits any rise 46/54."],
-  ["Internet, August", "₹590 × 2", "₹590", "The same bill, pasted in twice."],
-  ["Maid, October", "₹3,000", "₹0", "Priya had paid her half to the maid herself."],
 ];
 
 const FAQ = [
@@ -168,7 +164,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="bg-wash py-28 md:py-36">
+        <section className="border-t border-line py-28 md:py-36">
           <div className={`${wrap} grid grid-cols-1 gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20`}>
             <div>
             <Heading
@@ -181,16 +177,18 @@ export default function Page() {
             >
               Built on Switch
             </Heading>
-            <TryTheCard />
-            </div>
-            <dl className="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2">
+            <dl className="mt-10 divide-y divide-line border-y border-line">
               {SWITCH.map(([t, d]) => (
-                <div key={t}>
-                  <dt className="font-display text-[18px] font-medium tracking-tight">{t}</dt>
-                  <dd className="mt-2 text-[16px] leading-relaxed text-soft">{d}</dd>
+                <div key={t} className="py-5">
+                  <dt className="font-display text-[17px] font-medium tracking-tight">{t}</dt>
+                  <dd className="mt-1.5 text-[15.5px] leading-relaxed text-soft">{d}</dd>
                 </div>
               ))}
             </dl>
+            </div>
+            <PhotoStage src="/living.jpg" className="self-start">
+              <TryTheCard />
+            </PhotoStage>
           </div>
         </section>
 
@@ -208,7 +206,7 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="flatmates" className="bg-wash py-28 md:py-36">
+        <section id="flatmates" className="border-t border-line py-28 md:py-36">
           <div className={`${wrap} grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20`}>
             <div>
               <Heading sub="Priya and Sam share a flat. Sam pays the bills and keeps a sheet of what Priya owes. By October the sheet and Priya were ₹7,910 apart, and neither wanted to go through the other's bank statements.">
@@ -220,28 +218,9 @@ export default function Page() {
                 Sam fixed his sheet with one button, and they both signed.
               </p>
             </div>
-            {/* Sam's sheet, corrected by hand: the three lines the agents found. */}
-            <div className="-rotate-[0.6deg] self-start rounded-[4px] bg-white px-6 py-7 shadow-[0_18px_40px_-24px_rgba(11,14,20,0.35)] md:px-9">
-              <div className="flex items-baseline justify-between border-b border-line pb-3">
-                <span className="font-display text-[18px] font-medium">Sam&apos;s sheet, May to October</span>
-                <span className="shrink-0 text-[13px] text-grey">Priya&apos;s share</span>
-              </div>
-              <ul className="divide-y divide-dashed divide-line text-[15.5px]">
-                {FLAT_SHEET.map(([bill, was, now, why]) => (
-                  <li key={bill} className="grid grid-cols-[1fr_auto] gap-x-4 py-3.5">
-                    <span>{bill}</span>
-                    <span className="text-right">
-                      <s className="text-grey decoration-sea/70 decoration-2">{was}</s> <span className="font-medium text-sea">{now}</span>
-                    </span>
-                    <span className="col-span-2 text-[13.5px] text-soft">{why}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-baseline justify-between border-t-2 border-ink pt-3">
-                <span className="font-medium">Taken off the sheet</span>
-                <span className="font-display text-[1.6rem] font-medium tracking-[-0.02em] text-sea">₹7,910</span>
-              </div>
-            </div>
+            <PhotoStage src="/flat.jpg" className="self-start">
+              <BillsSheet />
+            </PhotoStage>
           </div>
         </section>
 
