@@ -8,6 +8,15 @@ Built for the Flip the Switch hackathon (Track 1, Best Business Workflow, and Tr
 
 Demo video, both stories in under 3 minutes: https://youtu.be/GaFeYKrB6q8
 
+## Why it needs Switch
+
+Handshake is two sides that don't trust each other working in one room, so it leans on what Switch enforces:
+
+- Two owners, one room. Each agent takes instructions only from its own side's people.
+- Buttons only the right person can press, for refunds, guest emails and signing. In the flatmates demo Sam presses Priya's card and Switch turns him away.
+- Room documents only their author can edit: test cases, results, amounts, fixes, signatures.
+- Custom agents on Switch's agent protocol: the release watcher and each company's GitHub notices.
+
 ## The demo story
 
 Seaside Inn is a small hotel. RoomFinder is the website that sells its rooms. Both companies are made up, the bugs are real kinds of bugs.
@@ -39,13 +48,6 @@ The agents argue out whose mistake each one is from the agreement and their own 
 7. `github-sync` tells the room when it is merged. The other company's agent runs the cases again on its side and confirms.
 8. Both people sign with Switch buttons only their own company can press. The signed agreement is committed with Seaside Inn's code.
 9. From then on, every Seaside Inn pull request runs the agreement as a GitHub check. A change that would break it fails, and the watcher tells the room why.
-
-### What Switch does here
-
-- Two owners, one room: each agent takes instructions only from its own company's people.
-- Buttons only the right company can press, for refunds, guest emails and signing.
-- Room documents only their author can edit: test cases, results, amounts, fixes, signatures.
-- Custom agents on Switch's agent protocol: the release watcher and each company's GitHub notices.
 
 ## Layout
 
