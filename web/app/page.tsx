@@ -219,15 +219,29 @@ export default function Page() {
         </section>
 
         <section id="demo" className={`${wrap} py-28 md:py-36`}>
-          <Heading sub="A real run in a local Switch room, cut to under 3 minutes.">See it in one go</Heading>
-          <video
-            className="mt-12 aspect-video w-full rounded-[18px] border border-line bg-wash"
-            src="/video/handshake.mp4"
-            poster="/video/handshake.jpg"
-            controls
-            playsInline
-            preload="metadata"
-          />
+          <Heading sub="Two real runs in a local Switch room, every button pressed by hand. Pick the one closer to you.">Watch both</Heading>
+          <div className="mt-12 grid gap-8 md:grid-cols-2">
+            {[
+              ["Two companies", "Seaside Inn and RoomFinder find a date bug and refund 26 guests.", "companies", "1:48"],
+              ["Two flatmates", "Priya and Sam settle a bills sheet. Sam tries to sign for Priya and Switch says no.", "flatmates", "1:11"],
+            ].map(([title, sub, file, length]) => (
+              <figure key={file}>
+                <video
+                  className="aspect-video w-full rounded-[14px] border border-line bg-wash"
+                  src={`/video/${file}.mp4`}
+                  poster={`/video/${file}.jpg`}
+                  controls
+                  playsInline
+                  preload="none"
+                />
+                <figcaption className="mt-4">
+                  <span className="font-display text-[18px] font-medium tracking-tight">{title}</span>
+                  <span className="ml-2 text-[14px] text-grey">{length}</span>
+                  <span className="mt-1 block text-[15.5px] leading-relaxed text-soft">{sub}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
 
         <section id="faq" className={`${wrap} pb-28 md:pb-36`}>
