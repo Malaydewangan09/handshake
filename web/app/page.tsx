@@ -85,21 +85,29 @@ export default function Page() {
     <>
       <Nav />
       <main className="overflow-x-clip">
-        <section className={`${wrap} pb-20 pt-14 md:pb-28 md:pt-20`}>
-          <HeroArgument />
-          <div className="mt-14 grid gap-8 border-t border-line pt-8 md:mt-20 md:grid-cols-[1fr_auto] md:items-end">
-            <p className="max-w-[40rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
-              Handshake gives each side its own AI agent in one shared chat. They check their own records, argue it out and agree whose
-              mistake it was. Nobody has to show their code or their bank statement.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a href="#demo" className={btnPrimary}>
-                Watch the demo
-              </a>
-              <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
-                View source <ArrowRight size={14} />
-              </a>
+        <section className="relative overflow-hidden bg-wash">
+          {/* Each side's colour, faint, as the light on its half of the desk. */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(45%_55%_at_12%_20%,var(--sea-tint),transparent_70%),radial-gradient(45%_55%_at_92%_85%,var(--amber-tint),transparent_70%)]" aria-hidden />
+          <div className={`${wrap} relative grid grid-cols-1 items-center gap-12 pb-20 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16`}>
+            <div>
+              <h1 className="max-w-[14ch] font-display text-[2.8rem] font-medium leading-[1.04] tracking-[-0.035em] sm:text-[3.6rem] lg:text-[4.2rem]">
+                Let the agents argue it out
+              </h1>
+              <p className="mt-6 max-w-[34rem] text-pretty text-[17.5px] leading-relaxed text-soft md:text-[18.5px]">
+                Two companies blaming each other for a bug. Two flatmates who don&apos;t agree on the bills. Handshake gives each side its own
+                AI agent in one shared chat, and they check their own records until both agree whose mistake it was. Nobody has to show their
+                code or their bank statement.
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <a href="#demo" className={btnPrimary}>
+                  Watch the demo
+                </a>
+                <a href={REPO_URL} className="inline-flex items-center gap-1.5 rounded-[8px] border border-line bg-white px-5 py-3 text-[15px] font-medium transition hover:border-ink/25 active:scale-[0.98]">
+                  View source <ArrowRight size={14} />
+                </a>
+              </div>
             </div>
+            <HeroArgument />
           </div>
         </section>
 
